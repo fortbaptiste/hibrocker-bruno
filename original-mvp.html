@@ -3328,18 +3328,6 @@ document.querySelectorAll('.mobile-link').forEach(link => {
   });
 });
 
-// Navbar hide/show on scroll
-let lastScroll = 0;
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  const current = window.pageYOffset;
-  if (current > lastScroll && current > 100) {
-    navbar.style.transform = 'translateY(-100%)';
-  } else {
-    navbar.style.transform = 'translateY(0)';
-  }
-  lastScroll = current;
-});
 
 // Easter egg: click burst
 document.querySelectorAll('.easter-egg').forEach(el => {
