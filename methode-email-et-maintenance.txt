@@ -1,0 +1,142 @@
+================================================================
+          HI BROKER — SOLUTION EMAIL & PLAN DE MAINTENANCE
+================================================================
+
+
+----------------------------------------------------------------
+1. SOLUTION EMAIL — ENVOI DEPUIS LA BOITE MAIL DU COURTIER
+----------------------------------------------------------------
+
+PROBLEME IDENTIFIE
+
+Les emails envoyés via une plateforme tierce (Brevo, Mandrill, etc.)
+finissent souvent en spam. Les clients ne reconnaissent pas l'expediteur
+et n'ouvrent pas le mail.
+
+Quand le courtier envoie depuis sa propre boite mail, le taux de
+reponse est nettement meilleur.
+
+
+SOLUTION
+
+On envoie les emails directement depuis la boite mail du courtier.
+
+Le courtier connecte sa boite mail pendant l'onboarding, exactement
+comme il connecte ses reseaux sociaux. Un simple clic d'autorisation.
+
+Ensuite, chaque email de sollicitation d'avis part de son adresse
+reelle. Le client recoit un mail de "jean@courtier-dupont.be",
+pas de "noreply@hibroker.com".
+
+
+COMMENT CA MARCHE
+
+Pour les courtiers sur Microsoft 365 / Outlook :
+  - Connexion via Microsoft Graph API
+  - Le courtier autorise l'envoi en son nom (OAuth)
+  - L'email apparait dans ses elements envoyes
+  - Aucune configuration DNS requise
+
+Pour les courtiers sur Gmail :
+  - Connexion via Gmail API
+  - Meme principe, meme simplicite
+
+Pour les autres :
+  - Fallback via Brevo avec avertissement sur la delivrabilite
+  - Ou envoi manuel par le courtier avec un template pre-rempli
+
+
+AVANTAGES
+
+  - Zero probleme de spam
+  - Le client reconnait l'expediteur
+  - L'email apparait dans les elements envoyes du courtier
+  - Aucune configuration technique cote courtier
+  - Gratuit (APIs incluses dans Microsoft 365 et Gmail)
+  - Deja integre dans le processus d'onboarding
+
+
+================================================================
+
+
+----------------------------------------------------------------
+2. PLAN DE MAINTENANCE & EXPLOITATION
+----------------------------------------------------------------
+
+POURQUOI
+
+Hi Broker connecte en permanence vos courtiers a Google, Facebook,
+Instagram, LinkedIn, Microsoft 365, Gmail, des services d'IA et
+des outils d'automatisation. Sans surveillance active, une plateforme
+de ce type se degrade en quelques semaines.
+
+
+CE QUI EST INCLUS
+
+Surveillance & Monitoring
+  - Disponibilite du serveur et des services
+  - Bon fonctionnement des workflows d'automatisation
+  - Etat des connexions OAuth de chaque courtier
+  - Detection proactive des tokens expires
+  - Surveillance des envois d'emails et publications
+  - Performances de la base de donnees
+
+Securite
+  - Mises a jour et correctifs de securite
+  - Segregation des donnees entre courtiers
+  - Chiffrement des tokens d'acces
+  - Sauvegardes quotidiennes (retention 30 jours)
+  - Restauration en cas d'incident
+  - Veille sur les changements d'API tierces
+
+Correction de bugs
+  - Bugs bloquants : intervention sous 12h ouvrees
+  - Bugs non bloquants : intervention sous 24h ouvrees
+  - Tests apres chaque correction
+
+Infrastructure
+  - Gestion du serveur, certificats SSL, espace disque
+  - Optimisation de la base de donnees
+  - Gestion des quotas des services tiers
+  - Hebergement et services tiers inclus dans le forfait
+
+Evolutions mineures
+  - Ajustements d'interface
+  - Modifications de templates (emails, publications)
+  - Ajout ou modification de champs
+  - Ajustement des prompts IA
+  - Petites ameliorations fonctionnelles
+
+Suivi & Communication
+  - Point de suivi mensuel (visio ou appel)
+  - Rapport mensuel (incidents, resolutions, metriques)
+  - Canal de communication direct pour les urgences
+  - Recommandations d'amelioration
+
+
+CE QUI N'EST PAS INCLUS
+
+  - Developpement de nouveaux modules complets
+  - Refonte de l'interface ou de l'architecture
+  - Integration de nouvelles plateformes non prevues
+  - Formation des equipes ou des courtiers
+
+  Ces elements font l'objet d'un devis separe (TJ : 450 EUR HT).
+
+
+TARIF
+
+  900 EUR HT / mois — infrastructure comprise.
+
+
+CONDITIONS
+
+  Engagement         3 mois, renouvelable par tacite reconduction
+  Preavis            1 mois
+  Facturation        Mensuelle
+  Support            Lundi au vendredi, 9h - 18h
+  Critique           Sous 12h ouvrees
+  Standard           Sous 24h ouvrees
+
+
+================================================================
