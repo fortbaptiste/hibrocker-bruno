@@ -3,175 +3,449 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HiBroker Advice v2 — Ce qu'il reste a faire — Isma</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Réponse à Bruno — Hi Broker Platform</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script>
-tailwind.config={theme:{extend:{fontFamily:{'inter':['Inter','sans-serif'],'grotesk':['Space Grotesk','sans-serif'],'mono':['JetBrains Mono','monospace'],'space':['Space Mono','monospace']},colors:{'neo':{'black':'#0a0a0a','white':'#fefefe','gray':'#f5f5f5','dark':'#0a0a0a'}}}}}
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        'grotesk': ['Space Grotesk', 'sans-serif'],
+        'mono': ['Space Mono', 'monospace'],
+        'inter': ['Inter', 'sans-serif'],
+      },
+      colors: {
+        'neo': {
+          'black': '#1a1a1a',
+          'white': '#fefefe',
+          'blue': '#4361ee',
+          'orange': '#ff6b35',
+          'green': '#06d6a0',
+          'yellow': '#ffd166',
+          'purple': '#7209b7',
+          'pink': '#f72585',
+          'red': '#ef233c',
+          'gray': '#f0f0f0',
+          'dark': '#0d1117',
+        }
+      },
+      boxShadow: {
+        'neo': '6px 6px 0px 0px rgba(26,26,26,1)',
+        'neo-sm': '3px 3px 0px 0px rgba(26,26,26,1)',
+        'neo-lg': '10px 10px 0px 0px rgba(26,26,26,1)',
+        'neo-blue': '6px 6px 0px 0px #4361ee',
+        'neo-orange': '6px 6px 0px 0px #ff6b35',
+        'neo-green': '6px 6px 0px 0px #06d6a0',
+        'neo-purple': '6px 6px 0px 0px #7209b7',
+        'neo-yellow': '6px 6px 0px 0px #ffd166',
+      }
+    }
+  }
+}
 </script>
 <style>
-*{scroll-behavior:smooth;margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#fefefe;color:#0a0a0a;overflow-x:hidden}
-::selection{background:#0a0a0a;color:#fff}
-::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#fefefe;border-left:3px solid #0a0a0a}::-webkit-scrollbar-thumb{background:#0a0a0a;border-radius:0}
-.neo-border{border:3px solid #0a0a0a}.neo-border-2{border:2px solid #0a0a0a}
-.neo-shadow{box-shadow:6px 6px 0 #0a0a0a}.neo-shadow-sm{box-shadow:4px 4px 0 #0a0a0a}
-.neo-card{border:3px solid #0a0a0a;box-shadow:6px 6px 0 #0a0a0a;transition:all .2s cubic-bezier(.16,1,.3,1);background:#fff}
-.neo-card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 #0a0a0a}
-.neo-card-sm{border:2px solid #0a0a0a;box-shadow:3px 3px 0 #0a0a0a;transition:all .2s cubic-bezier(.16,1,.3,1)}
-.neo-card-sm:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #0a0a0a}
-.neo-btn{border:3px solid #0a0a0a;box-shadow:4px 4px 0 #0a0a0a;transition:all .15s ease;cursor:pointer;font-weight:700}
-.neo-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #0a0a0a}
-.neo-btn:active{transform:translate(4px,4px);box-shadow:0 0 0 #0a0a0a}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.anim{opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .45s ease}
-.anim.v{opacity:1;transform:translateY(0)}
-.marquee{animation:marquee 25s linear infinite}
-.gradient-bg{background:#0a0a0a}
-.stripe-bg{background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.03) 10px,rgba(0,0,0,.03) 20px)}
-.ticker-wrap{overflow:hidden}.ticker{display:inline-flex;white-space:nowrap}
-.code-block{font-family:'JetBrains Mono',monospace;font-size:.75rem;line-height:1.7;border-radius:0}
-.progress-bar{position:fixed;top:0;left:0;height:4px;background:#0a0a0a;z-index:200;transition:width .1s}
-.section-number{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#888}
-.back-top{position:fixed;bottom:24px;right:24px;z-index:100;opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none}
-.back-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
-.click-burst{pointer-events:none;position:fixed;z-index:9999}
-.arrow-pulse{animation:arrowPulse 1.5s ease-in-out infinite}
-@keyframes arrowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}
-.screenshot-wrapper{position:relative}
-.screenshot-wrapper img{width:100%;display:block;border-radius:0}
-.img-caption{font-size:.75rem;color:#888;font-family:'Space Mono',monospace;margin-top:8px;text-align:center}
-.priority-high{border-left:5px solid #ef4444;background:#fef2f2}
-.priority-medium{border-left:5px solid #f59e0b;background:#fffbeb}
-.priority-new{border-left:5px solid #3b82f6;background:#eff6ff}
-.flow-step{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:2px solid #0a0a0a;box-shadow:3px 3px 0 #0a0a0a;font-family:'Space Mono',monospace;font-size:.85rem}
-.flow-arrow{font-size:1.5rem;color:#0a0a0a;font-weight:bold;flex-shrink:0}
+* { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: #fefefe; overflow-x: hidden; }
+::selection { background: #4361ee; color: white; }
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #fefefe; }
+::-webkit-scrollbar-thumb { background: #1a1a1a; border: 3px solid #fefefe; }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(60px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeInLeft { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+@keyframes fadeInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes scaleIn { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
+@keyframes slideDown { from { opacity:0; transform:translateY(-30px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounceIn { 0% { opacity:0; transform:scale(0.3); } 50% { opacity:1; transform:scale(1.05); } 70% { transform:scale(0.9); } 100% { transform:scale(1); } }
+@keyframes float { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-10px); } }
+@keyframes pulse-border { 0%,100% { border-color:#1a1a1a; } 50% { border-color:#4361ee; } }
+@keyframes typing { from { width:0; } to { width:100%; } }
+@keyframes blink { 50% { border-color:transparent; } }
+@keyframes marquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+@keyframes wiggle { 0%,100% { transform:rotate(0deg); } 25% { transform:rotate(-3deg); } 75% { transform:rotate(3deg); } }
+@keyframes countUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes drawLine { from { width:0; } to { width:100%; } }
+@keyframes gradient { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+@keyframes popIn { 0% { opacity:0; transform:scale(0) rotate(-10deg); } 80% { transform:scale(1.1) rotate(2deg); } 100% { opacity:1; transform:scale(1) rotate(0); } }
+.animate-on-scroll { opacity:0; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-on-scroll.visible { opacity:1; }
+.animate-on-scroll.visible.from-bottom { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-on-scroll.visible.from-left { animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-on-scroll.visible.from-right { animation: fadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-on-scroll.visible.scale-up { animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-on-scroll.visible.pop { animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-on-scroll.visible.bounce { animation: bounceIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.stagger-1 { transition-delay: 0.1s !important; animation-delay: 0.1s !important; }
+.stagger-2 { transition-delay: 0.2s !important; animation-delay: 0.2s !important; }
+.stagger-3 { transition-delay: 0.3s !important; animation-delay: 0.3s !important; }
+.stagger-4 { transition-delay: 0.4s !important; animation-delay: 0.4s !important; }
+.stagger-5 { transition-delay: 0.5s !important; animation-delay: 0.5s !important; }
+.stagger-6 { transition-delay: 0.6s !important; animation-delay: 0.6s !important; }
+.stagger-7 { transition-delay: 0.7s !important; animation-delay: 0.7s !important; }
+.stagger-8 { transition-delay: 0.8s !important; animation-delay: 0.8s !important; }
+.float { animation: float 3s ease-in-out infinite; }
+.wiggle:hover { animation: wiggle 0.5s ease-in-out; }
+.marquee { animation: marquee 30s linear infinite; }
+.gradient-bg { background: linear-gradient(-45deg, #4361ee, #7209b7, #f72585, #ff6b35); background-size: 400% 400%; animation: gradient 8s ease infinite; }
+.neo-card { border: 3px solid #1a1a1a; box-shadow: 6px 6px 0px 0px rgba(26,26,26,1); transition: all 0.2s ease; }
+.neo-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px 0px rgba(26,26,26,1); }
+.neo-card-sm { border: 2px solid #1a1a1a; box-shadow: 3px 3px 0px 0px rgba(26,26,26,1); transition: all 0.2s ease; }
+.neo-card-sm:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px 0px rgba(26,26,26,1); }
+.neo-btn { border: 3px solid #1a1a1a; box-shadow: 4px 4px 0px 0px rgba(26,26,26,1); transition: all 0.15s ease; cursor: pointer; }
+.neo-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px rgba(26,26,26,1); }
+.neo-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px 0px rgba(26,26,26,1); }
+.section-number { font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
+.tooltip-container { position: relative; }
+.tooltip-container .tooltip-text { visibility: hidden; opacity: 0; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; padding: 6px 12px; font-size: 0.75rem; white-space: nowrap; border: 2px solid #1a1a1a; transition: all 0.2s; z-index: 50; }
+.tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
+.progress-fill { transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.ticker-wrap { overflow: hidden; }
+.ticker { display: inline-flex; white-space: nowrap; }
+.mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
+.mobile-menu.open { transform: translateX(0); }
+.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.accordion-content.open { max-height: 2000px; }
+.accordion-icon { transition: transform 0.3s ease; }
+.accordion-icon.open { transform: rotate(45deg); }
+.counter { font-variant-numeric: tabular-nums; }
+.code-block { font-family: 'Space Mono', monospace; font-size: 0.8rem; line-height: 1.6; }
+.schema-line { height: 3px; background: #1a1a1a; }
+.typing-text { overflow: hidden; white-space: nowrap; border-right: 3px solid #1a1a1a; animation: typing 3s steps(40) 1s forwards, blink 0.75s step-end infinite; width: 0; }
+.easter-egg { cursor: default; transition: all 0.3s; }
+.easter-egg:hover { transform: rotate(360deg) scale(1.2); }
+.click-burst { pointer-events: none; position: fixed; z-index: 9999; }
 </style>
 </head>
-<body>
+<body class="bg-neo-white text-neo-black">
 
-<!-- PROGRESS BAR -->
-<div id="progress-bar" class="progress-bar" style="width:0%"></div>
-
-<!-- NAV -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-neo-white/95 backdrop-blur-md transition-all duration-300" style="border-bottom:3px solid #0a0a0a">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between h-14">
-    <div class="flex items-center gap-3">
-      <div class="neo-card-sm bg-neo-black text-white px-3 py-1 font-mono text-sm font-bold">HB</div>
-      <span class="font-grotesk font-bold text-sm hidden sm:block">Advice v2 &mdash; Isma</span>
+<!-- NAVIGATION -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-neo-white border-b-3 border-neo-black transition-all duration-300" style="border-bottom: 3px solid #1a1a1a;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-neo-blue border-2 border-neo-black flex items-center justify-center">
+          <span class="text-white font-bold font-mono text-sm">HB</span>
+        </div>
+        <span class="font-grotesk font-bold text-lg hidden sm:block">Hi Broker — Reponse</span>
+      </div>
+      <div class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="#hero" class="hover:text-neo-blue transition-colors">Intro</a>
+        <a href="#part1" class="hover:text-neo-blue transition-colors">Email</a>
+        <a href="#part2" class="hover:text-neo-blue transition-colors">Maintenance</a>
+        <a href="#part3" class="hover:text-neo-blue transition-colors">Scope MVP</a>
+        <a href="#next" class="hover:text-neo-blue transition-colors">Contact</a>
+        <a href="#next" class="neo-btn bg-neo-blue text-white px-4 py-1.5 text-sm font-bold">Next Steps</a>
+      </div>
+      <button id="mobile-toggle" class="lg:hidden neo-btn bg-neo-yellow px-3 py-1.5 font-bold text-sm">Menu</button>
     </div>
-    <div class="hidden lg:flex items-center gap-1 text-xs font-space">
-      <a href="#cliquable" class="px-3 py-1.5 hover:bg-neo-gray transition-colors font-bold">Cliquable</a>
-      <a href="#onboarding" class="px-3 py-1.5 hover:bg-neo-gray transition-colors font-bold">Onboarding</a>
-      <a href="#siteweb" class="px-3 py-1.5 hover:bg-neo-gray transition-colors font-bold">Site web</a>
-      <a href="#emails" class="px-3 py-1.5 hover:bg-neo-gray transition-colors font-bold">Emails</a>
-      <a href="#recap" class="px-3 py-1.5 hover:bg-neo-gray transition-colors font-bold">Recap</a>
-    </div>
-    <div class="font-mono text-xs text-gray-400">20 sections</div>
   </div>
-</div>
 </nav>
 
-<!-- TICKER -->
-<div class="fixed top-[56px] left-0 right-0 z-40 bg-neo-black text-white py-1.5 ticker-wrap" style="border-bottom:3px solid #0a0a0a">
-<div class="ticker marquee">
-  <span class="mx-8 text-xs font-space">HIBROKER ADVICE V2</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; TOUT CLIQUABLE</span>
-  <span class="mx-8 text-xs font-space">ONBOARDING RENFORCE</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; ANALYSE SITE WEB</span>
-  <span class="mx-8 text-xs font-space">EMAILS GMAIL/OUTLOOK</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; AVIS GOOGLE 100%</span>
-  <span class="mx-8 text-xs font-space">CONCURRENTS 100%</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; NOUVELLE ETAPE</span>
-  <span class="mx-8 text-xs font-space">HIBROKER ADVICE V2</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; TOUT CLIQUABLE</span>
-  <span class="mx-8 text-xs font-space">ONBOARDING RENFORCE</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; ANALYSE SITE WEB</span>
-  <span class="mx-8 text-xs font-space">EMAILS GMAIL/OUTLOOK</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; AVIS GOOGLE 100%</span>
-  <span class="mx-8 text-xs font-space">CONCURRENTS 100%</span>
-  <span class="mx-8 text-xs font-space text-gray-400">&#9733; NOUVELLE ETAPE</span>
+<!-- Mobile menu -->
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-80 bg-neo-white border-l-3 z-50 p-8 flex flex-col gap-4" style="border-left: 3px solid #1a1a1a;">
+  <button id="mobile-close" class="self-end neo-btn bg-neo-red text-white px-3 py-1 font-bold text-sm mb-4">Fermer</button>
+  <a href="#hero" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Intro</a>
+  <a href="#part1" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Solution Email</a>
+  <a href="#part2" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Maintenance</a>
+  <a href="#part3" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Scope MVP</a>
+  <a href="#next" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Contact</a>
+  <a href="#next" class="text-lg font-bold hover:text-neo-blue transition-colors mobile-link">Next Steps</a>
 </div>
+<div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+<!-- TICKER BAR -->
+<div class="fixed top-16 left-0 right-0 z-40 bg-neo-black text-white py-2 ticker-wrap">
+  <div class="ticker marquee">
+    <span class="mx-8 text-sm font-mono">REPONSE PROJET HI BROKER</span>
+    <span class="mx-8 text-sm font-mono text-neo-yellow">SOLUTION EMAIL</span>
+    <span class="mx-8 text-sm font-mono text-neo-green">MAINTENANCE 900&euro;/MOIS</span>
+    <span class="mx-8 text-sm font-mono text-neo-orange">SCOPE MVP 16,500&euro;</span>
+    <span class="mx-8 text-sm font-mono text-neo-pink">PRET A DEMARRER</span>
+    <span class="mx-8 text-sm font-mono">REPONSE PROJET HI BROKER</span>
+    <span class="mx-8 text-sm font-mono text-neo-yellow">SOLUTION EMAIL</span>
+    <span class="mx-8 text-sm font-mono text-neo-green">MAINTENANCE 900&euro;/MOIS</span>
+    <span class="mx-8 text-sm font-mono text-neo-orange">SCOPE MVP 16,500&euro;</span>
+    <span class="mx-8 text-sm font-mono text-neo-pink">PRET A DEMARRER</span>
+  </div>
 </div>
 
 <!-- ============================================ -->
-<!-- SECTION 01 — HELLO ISMA -->
+<!-- SECTION 01 — HERO -->
 <!-- ============================================ -->
-<section class="min-h-screen flex items-center justify-center pt-32 pb-20 px-4 relative overflow-hidden">
-  <div class="absolute inset-0 stripe-bg opacity-30"></div>
-  <div class="max-w-3xl mx-auto relative z-10">
-    <div class="anim">
-      <div class="section-number mb-6">01 / SALUT</div>
-      <h1 class="font-grotesk text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8">
-        Hey Isma,<br>on fait le point.
+<section id="hero" class="min-h-screen flex items-center justify-center pt-28 pb-20 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-20 left-10 w-40 h-40 bg-neo-blue rotate-12"></div>
+    <div class="absolute bottom-20 right-10 w-60 h-60 bg-neo-orange -rotate-6"></div>
+    <div class="absolute top-1/2 left-1/2 w-32 h-32 bg-neo-green rotate-45"></div>
+  </div>
+  <div class="max-w-5xl mx-auto text-center relative z-10">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 01 — Hello Bruno</div>
+      <h1 class="font-grotesk text-5xl sm:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+        Salut Bruno,<br>
+        <span class="gradient-bg bg-clip-text text-transparent">voici mes retours</span>
       </h1>
-      <div class="text-lg sm:text-xl text-gray-500 font-space leading-relaxed mb-8 space-y-4">
-        <p>La <strong class="text-neo-black">v1 de Advice</strong> tourne bien. Mais il y a des trucs a ameliorer pour que tout soit vraiment propre.</p>
-        <p>Je t'ai prepare cette page pour te montrer <strong class="text-neo-black">exactement</strong> ce qu'il reste a faire. Avec les screenshots, tu vas voir tout de suite de quoi je parle.</p>
-        <p>C'est pas enorme, mais c'est important. On parle de <strong class="text-neo-black">4 gros sujets</strong> :</p>
-      </div>
     </div>
-    <div class="anim">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-        <div class="neo-card-sm bg-white px-4 py-3 text-center">
-          <div class="text-2xl mb-1">&#128073;</div>
-          <div class="font-mono text-xs font-bold">Tout cliquable</div>
-        </div>
-        <div class="neo-card-sm bg-white px-4 py-3 text-center">
-          <div class="text-2xl mb-1">&#9733;</div>
-          <div class="font-mono text-xs font-bold">Avis Google</div>
-        </div>
-        <div class="neo-card-sm bg-white px-4 py-3 text-center">
-          <div class="text-2xl mb-1">&#127760;</div>
-          <div class="font-mono text-xs font-bold">Site web</div>
-        </div>
-        <div class="neo-card-sm bg-white px-4 py-3 text-center">
-          <div class="text-2xl mb-1">&#9993;</div>
-          <div class="font-mono text-xs font-bold">Emails</div>
-        </div>
-      </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <p class="text-xl sm:text-2xl font-light text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Suite a notre appel, j'ai prepare ce document qui couvre tout.<br>
+        Trois sujets, zero zone d'ombre.
+      </p>
     </div>
-    <div class="anim">
-      <a href="#cliquable" class="neo-btn bg-neo-black text-white px-8 py-3 font-space text-sm inline-flex items-center gap-2">
-        C'est parti &#8595;
-      </a>
+    <div class="animate-on-scroll from-bottom stagger-3 flex flex-wrap justify-center gap-4 mb-12">
+      <a href="#part1" class="neo-btn bg-neo-blue text-white px-6 py-3 font-bold font-grotesk">1. Solution Email</a>
+      <a href="#part2" class="neo-btn bg-neo-orange text-white px-6 py-3 font-bold font-grotesk">2. Maintenance</a>
+      <a href="#part3" class="neo-btn bg-neo-green text-neo-black px-6 py-3 font-bold font-grotesk">3. Scope MVP</a>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-4 flex flex-wrap justify-center gap-4">
+      <div class="neo-card-sm bg-neo-yellow px-5 py-2 font-bold font-mono text-sm easter-egg">BAPTISTE FORT</div>
+      <div class="neo-card-sm bg-neo-green px-5 py-2 font-bold font-mono text-sm">FEVRIER 2026</div>
+      <div class="neo-card-sm bg-neo-purple text-white px-5 py-2 font-bold font-mono text-sm">DOCUMENT COMPLET</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 02 — LA REGLE : TOUT DOIT ETRE CLIQUABLE -->
+<!-- SECTION 02 — RECAP -->
 <!-- ============================================ -->
-<section id="cliquable" class="py-20 px-4 bg-neo-dark text-white" style="border-top:3px solid #0a0a0a">
+<section id="recap" class="py-20 px-4 bg-neo-gray">
   <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number text-gray-400 mb-4">02 / LA REGLE</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Tout doit etre cliquable.</h2>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-6">
-        En ce moment, il y a plein d'elements dans l'app qui ont l'air cliquables mais qui ne font rien quand tu cliques dessus. C'est pas normal. Un utilisateur qui voit un chiffre, un compteur, un lien... il s'attend a ce que ca fasse quelque chose.
-      </p>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-8">
-        La regle c'est simple : <strong class="text-white">si ca ressemble a un bouton ou un lien, ca doit ouvrir une page ou une modal</strong>. Zero element decoratif qui pretend etre interactif. Tout doit mener quelque part.
-      </p>
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 02 — Recap</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">On est alignes sur l'essentiel.</h2>
     </div>
-    <div class="anim">
-      <div class="neo-card p-6" style="border-color:#333;box-shadow:6px 6px 0 rgba(255,255,255,.1)">
-        <div class="grid sm:grid-cols-3 gap-4 text-center">
-          <div class="p-4">
-            <div class="text-3xl mb-2">&#128073;</div>
-            <div class="font-mono text-sm font-bold mb-1">KPI cards</div>
-            <div class="text-xs text-gray-400 font-space">Cliquer sur "Note moyenne" doit ouvrir la page des avis</div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Bruno, apres notre echange, je vois qu'on est d'accord sur le gros du sujet. La vision est claire, le MVP est bien cadre, et on sait ou on va. Ce document, c'est juste pour poser les details noir sur blanc et repondre aux points qu'on a souleves ensemble.
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          J'ai structure ca en <strong>3 parties distinctes</strong> pour que tu puisses valider chaque sujet independamment. Pas besoin de tout lire d'un coup — tu peux sauter directement a la partie qui t'interesse.
+        </p>
+        <p class="text-lg leading-relaxed">
+          Le but, c'est qu'apres avoir lu ca, tu n'aies plus aucune question en suspens. Et si t'en as quand meme, on en parle et je mets a jour.
+        </p>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+        <div class="font-mono font-bold text-2xl counter" data-target="50">0</div>
+        <div class="text-xs mt-1 opacity-80">Sections</div>
+      </div>
+      <div class="neo-card-sm bg-neo-orange text-white p-4 text-center">
+        <div class="font-mono font-bold text-2xl counter" data-target="3">0</div>
+        <div class="text-xs mt-1 opacity-80">Parties</div>
+      </div>
+      <div class="neo-card-sm bg-neo-green text-white p-4 text-center">
+        <div class="font-mono font-bold text-2xl">0</div>
+        <div class="text-xs mt-1 opacity-80">Zones d'ombre</div>
+      </div>
+      <div class="neo-card-sm bg-neo-purple text-white p-4 text-center">
+        <div class="font-mono font-bold text-2xl">1</div>
+        <div class="text-xs mt-1 opacity-80">Objectif</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SECTION 03 — STRUCTURE -->
+<!-- ============================================ -->
+<section id="structure" class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 03 — Structure</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-4">Les 3 piliers de cette reponse</h2>
+      <p class="text-gray-500 text-lg mb-12">Chaque sujet est independant. Tu valides ce que tu veux, dans l'ordre que tu veux.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="animate-on-scroll from-bottom stagger-1">
+        <a href="#part1" class="block neo-card bg-neo-blue text-white p-8 h-full">
+          <div class="text-5xl mb-4 easter-egg">&#9993;</div>
+          <h3 class="font-grotesk text-2xl font-bold mb-3">Solution Email</h3>
+          <p class="opacity-90 leading-relaxed">Comment on resout le probleme du spam en envoyant depuis la boite mail du courtier. Zero config DNS, zero spam.</p>
+          <div class="mt-6 font-mono text-sm opacity-70">Sections 04 — 13</div>
+        </a>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-2">
+        <a href="#part2" class="block neo-card bg-neo-orange text-white p-8 h-full">
+          <div class="text-5xl mb-4 easter-egg">&#128736;</div>
+          <h3 class="font-grotesk text-2xl font-bold mb-3">Maintenance</h3>
+          <p class="opacity-90 leading-relaxed">900&euro; HT/mois. Ce que ca couvre, ce que ca ne couvre pas, et pourquoi c'est indispensable.</p>
+          <div class="mt-6 font-mono text-sm opacity-70">Sections 14 — 23</div>
+        </a>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-3">
+        <a href="#part3" class="block neo-card bg-neo-green text-neo-black p-8 h-full">
+          <div class="text-5xl mb-4 easter-egg">&#128640;</div>
+          <h3 class="font-grotesk text-2xl font-bold mb-3">Scope MVP — 16,500&euro;</h3>
+          <p class="opacity-90 leading-relaxed">Le detail complet : Advice, Connect, Plateforme. Chaque feature, chaque workflow, chaque ecran.</p>
+          <div class="mt-6 font-mono text-sm opacity-70">Sections 24 — 48</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- PART 1: EMAIL SOLUTION -->
+<!-- ============================================ -->
+<div id="part1" class="bg-neo-blue text-white py-12 px-4">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-yellow mb-4 font-bold">Partie 1 sur 3</div>
+      <h2 class="font-grotesk text-4xl sm:text-6xl font-bold">Solution Email</h2>
+      <p class="text-xl opacity-80 mt-4">Sections 04 a 13</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 04 — LE CONSTAT -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-red mb-4 font-bold">Section 04 — Le Constat</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Le probleme actuel avec les emails</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-neo-red/5 p-8 sm:p-10 mb-8">
+        <h3 class="font-grotesk text-xl font-bold mb-4 text-neo-red">Ce qui ne marche pas aujourd'hui</h3>
+        <p class="text-lg leading-relaxed mb-6">
+          Quand tu envoies un email via une plateforme tierce comme Brevo, Mailjet, ou n'importe quel outil d'emailing, l'email arrive avec un expediteur du genre <code class="bg-neo-gray px-2 py-1 text-sm font-mono">noreply@hibroker.com</code> ou <code class="bg-neo-gray px-2 py-1 text-sm font-mono">via brevo.com</code>.
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          Le client ne reconnait pas l'expediteur. Il ne sait pas qui c'est. Et Gmail, Outlook, tous les providers email voient ca comme du marketing de masse. Resultat : <strong>spam, onglet promotions, ou ignore</strong>.
+        </p>
+        <p class="text-lg leading-relaxed">
+          Les donnees historiques le montrent : les taux de reponse aux sollicitations envoyees par des plateformes tierces sont tres bas. Pas parce que le contenu est mauvais, mais parce que l'email n'inspire pas confiance.
+        </p>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 grid sm:grid-cols-3 gap-4">
+      <div class="neo-card-sm bg-neo-red text-white p-5 text-center">
+        <div class="text-3xl font-bold font-mono mb-1">~60%</div>
+        <div class="text-sm opacity-80">Finissent en spam/promo</div>
+      </div>
+      <div class="neo-card-sm bg-neo-red text-white p-5 text-center">
+        <div class="text-3xl font-bold font-mono mb-1">&lt;10%</div>
+        <div class="text-sm opacity-80">Taux d'ouverture</div>
+      </div>
+      <div class="neo-card-sm bg-neo-red text-white p-5 text-center">
+        <div class="text-3xl font-bold font-mono mb-1">0%</div>
+        <div class="text-sm opacity-80">Confiance client</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05 — LA SOLUTION -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 05 — La Solution</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Envoyer depuis la boite du courtier</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          L'idee est simple : au lieu d'envoyer via un service tiers, on envoie <strong>directement depuis la boite mail professionnelle du courtier</strong>. Le client recoit un email de <code class="bg-neo-blue/10 px-2 py-1 text-sm font-mono text-neo-blue">jean@courtier-dupont.be</code>, pas de <code class="bg-neo-red/10 px-2 py-1 text-sm font-mono text-neo-red">noreply@hibroker.com</code>.
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          L'email arrive dans la boite de reception principale du client, pas dans les spams. Le client reconnait l'expediteur. Il fait confiance. Il ouvre. Il clique.
+        </p>
+        <p class="text-lg leading-relaxed">
+          Et bonus : l'email apparait dans le dossier <strong>Elements envoyes</strong> du courtier. Tout est tracable, tout est naturel.
+        </p>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-8 grid sm:grid-cols-2 gap-6">
+      <div class="neo-card bg-neo-green/10 p-6">
+        <div class="font-grotesk font-bold text-lg mb-2 text-neo-green">Avant</div>
+        <div class="code-block bg-neo-gray p-4">
+          De: noreply@hibroker.com<br>
+          Via: brevo.com<br>
+          <span class="text-neo-red">&#10007; Spam / Promotions</span>
+        </div>
+      </div>
+      <div class="neo-card bg-neo-green/10 p-6">
+        <div class="font-grotesk font-bold text-lg mb-2 text-neo-green">Apres</div>
+        <div class="code-block bg-neo-gray p-4">
+          De: jean@courtier-dupont.be<br>
+          Via: outlook.office365.com<br>
+          <span class="text-neo-green">&#10003; Boite de reception</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 06 — MICROSOFT 365 -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 06 — Microsoft 365 / Outlook</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Integration via Microsoft Graph API</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Pour les courtiers qui utilisent Outlook / Microsoft 365, on passe par la <strong>Microsoft Graph API</strong>. C'est l'API officielle de Microsoft pour interagir avec les services M365.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-6 mb-6">
+          <div class="bg-neo-blue/5 p-5 border-l-4 border-neo-blue">
+            <div class="font-bold mb-2">Authentification</div>
+            <p class="text-sm">OAuth2 consent flow. Le courtier clique "Connecter", autorise l'acces, c'est fait. Aucune manipulation technique.</p>
           </div>
-          <div class="p-4">
-            <div class="text-3xl mb-2">&#128279;</div>
-            <div class="font-mono text-sm font-bold mb-1">Liens</div>
-            <div class="text-xs text-gray-400 font-space">"3 suggestions de reponse" doit ouvrir les suggestions</div>
+          <div class="bg-neo-blue/5 p-5 border-l-4 border-neo-blue">
+            <div class="font-bold mb-2">Envoi</div>
+            <p class="text-sm"><code class="font-mono bg-neo-gray px-1">POST /me/sendMail</code> — L'email est envoye comme si le courtier l'avait ecrit lui-meme depuis Outlook.</p>
           </div>
-          <div class="p-4">
-            <div class="text-3xl mb-2">&#128196;</div>
-            <div class="font-mono text-sm font-bold mb-1">Compteurs</div>
-            <div class="text-xs text-gray-400 font-space">"10 sans reponse" doit filtrer les avis sans reponse</div>
+          <div class="bg-neo-blue/5 p-5 border-l-4 border-neo-blue">
+            <div class="font-bold mb-2">Elements envoyes</div>
+            <p class="text-sm">L'email apparait automatiquement dans le dossier "Envoyes" du courtier. Tracabilite parfaite.</p>
+          </div>
+          <div class="bg-neo-blue/5 p-5 border-l-4 border-neo-blue">
+            <div class="font-bold mb-2">Config DNS</div>
+            <p class="text-sm">Aucune. Zero SPF, zero DKIM, zero DMARC a configurer. L'email passe par les serveurs Microsoft du courtier.</p>
+          </div>
+        </div>
+        <div class="neo-card-sm bg-neo-green/10 p-4 text-center">
+          <span class="font-bold text-neo-green">Cout : 0&euro;</span> — Inclus dans l'abonnement Microsoft 365 du courtier
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07 — GMAIL -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 07 — Gmail</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Integration via Gmail API</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Meme principe pour les courtiers sous Gmail / Google Workspace. On utilise la <strong>Gmail API</strong> avec le scope <code class="bg-neo-gray px-2 py-1 text-sm font-mono">gmail.send</code>.
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          Le courtier autorise l'acces via OAuth pendant l'onboarding (un seul clic). Ensuite, chaque email est envoye depuis sa propre adresse Gmail, avec sa signature, son avatar, tout.
+        </p>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="neo-card-sm bg-neo-orange/10 p-4 text-center">
+            <div class="font-bold text-neo-orange">Scope</div>
+            <div class="text-sm font-mono mt-1">gmail.send</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange/10 p-4 text-center">
+            <div class="font-bold text-neo-orange">Auth</div>
+            <div class="text-sm mt-1">OAuth2 consent</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange/10 p-4 text-center">
+            <div class="font-bold text-neo-orange">Cout</div>
+            <div class="text-sm mt-1">0&euro; (inclus)</div>
           </div>
         </div>
       </div>
@@ -179,242 +453,72 @@ body{font-family:'Inter',sans-serif;background:#fefefe;color:#0a0a0a;overflow-x:
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SECTION 03 — DASHBOARD : LES FLECHES -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
+<!-- SECTION 08 — ONBOARDING -->
+<section class="py-20 px-4">
   <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">03 / DASHBOARD</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Le tableau de bord.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Regarde les fleches sur le screenshot. Chaque KPI en haut (note moyenne, avis collectes, taux de conversion, alertes) doit etre cliquable et emmener vers la page correspondante.
-      </p>
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 08 — Integration Onboarding</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Un bouton en plus dans l'etape 3</h2>
     </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-dashboard.png" alt="Dashboard - les KPIs doivent etre cliquables" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Les fleches montrent tout ce qui doit devenir cliquable</p>
-    </div>
-    <div class="anim mt-8">
-      <div class="space-y-3">
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Note moyenne (2.7/5)</strong> &rarr; ouvre la page Avis Google</div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          L'onboarding a deja une etape "Reseaux sociaux" (Step 3) ou le courtier connecte Facebook, Instagram, LinkedIn, Google Business via OAuth. On ajoute simplement un nouveau bouton : <strong>"Connecter ta boite email"</strong>.
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          Meme flow, meme experience. Le courtier clique, il choisit Microsoft ou Google, il autorise, c'est fait. Pas de configuration technique, pas de DNS, pas de mots de passe a saisir.
+        </p>
+        <div class="flex flex-wrap gap-4 mt-6">
+          <div class="neo-btn bg-neo-blue text-white px-5 py-3 font-bold inline-flex items-center gap-2">
+            <span>&#127760;</span> Connecter Microsoft 365
+          </div>
+          <div class="neo-btn bg-neo-red text-white px-5 py-3 font-bold inline-flex items-center gap-2">
+            <span>&#9993;</span> Connecter Gmail
+          </div>
         </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Avis collectes (10)</strong> &rarr; ouvre la page Avis Internes</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Taux de conversion</strong> &rarr; ouvre la page Analytiques</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Alertes actives (0)</strong> &rarr; ouvre la page Alertes</div>
-        </div>
+        <p class="text-sm text-gray-500 mt-4">Exactement ce que verra le courtier pendant l'onboarding.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SECTION 04 — CAMPAGNES : LES FLECHES -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">04 / CAMPAGNES</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">La page campagnes.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Meme chose ici. Les compteurs en haut (campagnes actives, total envoyes, avis internes, clics vers Google) doivent tous etre cliquables. Et le bouton "Creer une campagne" doit bien fonctionner.
-      </p>
+<!-- SECTION 09 — FLOW CONCRET -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 09 — Comment ca marche concretement</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Le flow complet d'envoi</h2>
     </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-campagnes.png" alt="Campagnes - les compteurs doivent etre cliquables" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Les fleches montrent les elements non cliquables</p>
-    </div>
-    <div class="anim mt-8">
-      <div class="space-y-3">
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Campagnes actives (0)</strong> &rarr; filtre les campagnes actives</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Total envoyes (0)</strong> &rarr; ouvre le detail des envois</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Avis internes (0)</strong> &rarr; ouvre la page Avis Internes</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Clics vers Google (0)</strong> &rarr; ouvre les stats de conversion</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 05 — AVIS GOOGLE STATS -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">05 / AVIS GOOGLE &mdash; STATS</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Les stats des avis Google.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        En haut de la page Avis Google, on a les compteurs : note Google, avis totaux, sans reponse. Les fleches montrent que tout ca doit etre interactif. Quand tu cliques sur "10 sans reponse", ca doit filtrer pour afficher uniquement les avis sans reponse.
-      </p>
-    </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-avis-google-stats.png" alt="Avis Google stats - tout cliquable" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Les compteurs et les barres de notation doivent reagir au clic</p>
-    </div>
-    <div class="anim mt-8">
-      <div class="space-y-3">
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Note Google (2.7)</strong> &rarr; scroll vers le graphique detaille</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Avis totaux (10)</strong> &rarr; scroll vers la liste des avis</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Sans reponse (10)</strong> &rarr; filtre uniquement les avis sans reponse</div>
-        </div>
-        <div class="priority-high p-4 neo-border-2">
-          <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-          <div class="font-space text-sm"><strong>Barres de notation (5 etoiles, 4 etoiles...)</strong> &rarr; filtre par note</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 06 — AVIS GOOGLE REPONSES -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">06 / AVIS GOOGLE &mdash; REPONSES</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Les suggestions de reponse.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Sous chaque avis Google, on voit le lien "3 suggestions de reponse". La fleche montre que ce lien doit ouvrir un panneau ou une modal avec les 3 reponses generees par l'IA (professionnelle, empathique, directe). Le courtier doit pouvoir les lire et les copier.
-      </p>
-    </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-avis-google-reviews.png" alt="Avis Google - suggestions cliquables" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Le lien "3 suggestions de reponse" doit ouvrir les reponses IA</p>
-    </div>
-    <div class="anim mt-8">
-      <div class="priority-high p-4 neo-border-2">
-        <div class="font-mono text-xs font-bold text-red-600 mb-1">DOIT ETRE CLIQUABLE</div>
-        <div class="font-space text-sm"><strong>"3 suggestions de reponse"</strong> &rarr; ouvre un panneau/modal avec les 3 variantes IA (professionnel, empathique, direct) + bouton copier pour chaque</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 07 — RESUME CLIQUABLE -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-dark text-white" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number text-gray-400 mb-4">07 / EN RESUME</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">La regle d'or.</h2>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-8">
-        Pour Claude Code, la consigne est claire :
-      </p>
-    </div>
-    <div class="anim">
-      <div class="neo-card p-8 text-center" style="border-color:#333;box-shadow:6px 6px 0 rgba(255,255,255,.1)">
-        <div class="font-grotesk text-2xl sm:text-3xl font-bold text-white mb-4">
-          "Chaque element qui ressemble a un lien,<br>un compteur, ou un bouton<br>doit ouvrir une page ou une modal."
-        </div>
-        <div class="text-gray-400 font-space text-sm mt-4">
-          Pas d'exception. Pas d'element decoratif qui simule de l'interactivite.<br>Si l'utilisateur peut cliquer, quelque chose doit se passer.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 08 — ONBOARDING INTRO -->
-<!-- ============================================ -->
-<section id="onboarding" class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">08 / ONBOARDING</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">L'onboarding a renforcer.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        L'onboarding marche, c'est bien. Le courtier entre ses infos, connecte sa fiche Google, configure l'IA... Mais il y a un probleme : <strong class="text-neo-black">l'extraction des avis Google et la detection des concurrents ne marchent pas toujours</strong>. Et ca c'est pas acceptable.
-      </p>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Peu importe le parcours utilisateur, a la fin de l'onboarding, le courtier <strong class="text-neo-black">DOIT</strong> se retrouver avec ses avis Google et ses concurrents. C'est la base du produit.
-      </p>
-    </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-onboarding-cabinet.png" alt="Onboarding - etape cabinet" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Etape cabinet : les infos de base du courtier</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 09 — EXTRACTION AVIS GOOGLE -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">09 / EXTRACTION AVIS</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Les avis Google doivent arriver. Point.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Quand le courtier connecte sa fiche Google Maps pendant l'onboarding, le systeme doit scraper ses avis via Apify et les importer en base. En ce moment, ca plante parfois. Ca doit marcher <strong class="text-neo-black">a 100%</strong>.
-      </p>
-    </div>
-    <div class="anim">
-      <div class="neo-card p-2">
-        <img src="screenshot-onboarding-google.png" alt="Onboarding - connexion Google Maps" class="w-full" style="display:block">
-      </div>
-      <p class="img-caption">Etape Google Maps : le courtier choisit son etablissement</p>
-    </div>
-    <div class="anim mt-8">
-      <div class="neo-card p-6">
-        <div class="font-mono text-xs font-bold text-red-600 mb-4">CE QUI DOIT FONCTIONNER :</div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
         <div class="space-y-4">
-          <div class="flex items-start gap-3">
-            <div class="neo-card-sm bg-neo-black text-white w-8 h-8 flex-shrink-0 flex items-center justify-center font-mono text-xs font-bold">1</div>
-            <div class="font-space text-sm">Le courtier choisit son etablissement dans la liste &rarr; le <strong>place_id</strong> est stocke</div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-blue text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">1</div>
+            <div><strong>Sollicitation declenchee</strong> — Manuelle, CSV, ou webhook CRM. Le systeme sait quel courtier envoie.</div>
           </div>
-          <div class="flex items-start gap-3">
-            <div class="neo-card-sm bg-neo-black text-white w-8 h-8 flex-shrink-0 flex items-center justify-center font-mono text-xs font-bold">2</div>
-            <div class="font-space text-sm">Apify scrape les avis avec ce place_id &rarr; les avis arrivent en base</div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-blue text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">2</div>
+            <div><strong>n8n verifie la connexion mail</strong> — Le courtier a-t-il connecte sa boite email ? Quel provider ?</div>
           </div>
-          <div class="flex items-start gap-3">
-            <div class="neo-card-sm bg-neo-black text-white w-8 h-8 flex-shrink-0 flex items-center justify-center font-mono text-xs font-bold">3</div>
-            <div class="font-space text-sm">Claude Sonnet genere 3 suggestions de reponse pour chaque avis</div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-purple text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">3</div>
+            <div><strong>Switch selon le provider</strong><br>
+              <span class="inline-block neo-card-sm bg-neo-blue/10 px-3 py-1 text-sm mt-2 mr-2">M365 &rarr; Graph API</span>
+              <span class="inline-block neo-card-sm bg-neo-orange/10 px-3 py-1 text-sm mt-2 mr-2">Gmail &rarr; Gmail API</span>
+              <span class="inline-block neo-card-sm bg-neo-gray px-3 py-1 text-sm mt-2">Aucun &rarr; Fallback Brevo</span>
+            </div>
           </div>
-          <div class="flex items-start gap-3">
-            <div class="neo-card-sm bg-neo-black text-white w-8 h-8 flex-shrink-0 flex items-center justify-center font-mono text-xs font-bold">4</div>
-            <div class="font-space text-sm">Le courtier arrive sur son dashboard et voit <strong>tous ses avis</strong></div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">4</div>
+            <div><strong>Email envoye</strong> — Depuis la boite du courtier. Apparait dans ses Elements envoyes.</div>
+          </div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">5</div>
+            <div><strong>Log en base</strong> — Date, destinataire, statut, provider utilise. Tout est trace dans Supabase.</div>
           </div>
         </div>
       </div>
@@ -422,137 +526,1548 @@ body{font-family:'Inter',sans-serif;background:#fefefe;color:#0a0a0a;overflow-x:
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SECTION 10 — EXTRACTION CONCURRENTS -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
+<!-- SECTION 10 — SECURITE EMAIL -->
+<section class="py-20 px-4">
   <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">10 / CONCURRENTS</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Les concurrents aussi.</h2>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Meme chose pour les concurrents. A la fin de l'onboarding, le systeme detecte les courtiers concurrents par zone geographique. Ca doit fonctionner <strong class="text-neo-black">peu importe le parcours utilisateur</strong>.
-      </p>
-      <p class="text-gray-500 font-space mb-6 text-lg leading-relaxed">
-        Si le scraping echoue au premier essai, il faut un fallback. Si ca prend du temps, on montre un loader. Mais a la fin, le courtier doit avoir ses concurrents.
-      </p>
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-pink mb-4 font-bold">Section 10 — Securite</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Tokens et permissions</h2>
     </div>
-    <div class="anim">
-      <div class="neo-card p-6">
-        <div class="font-mono text-xs font-bold mb-4">LE FLUX QUI DOIT MARCHER :</div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="bg-neo-pink/5 p-5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Tokens chiffres</div>
+            <p class="text-sm">Access tokens et refresh tokens stockes chiffres dans Supabase. Jamais en clair.</p>
+          </div>
+          <div class="bg-neo-pink/5 p-5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Scopes minimaux</div>
+            <p class="text-sm">On demande uniquement <code class="font-mono text-xs">Mail.Send</code> (M365) ou <code class="font-mono text-xs">gmail.send</code> (Google). Rien d'autre. Pas de lecture des mails.</p>
+          </div>
+          <div class="bg-neo-pink/5 p-5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Refresh automatique</div>
+            <p class="text-sm">Les tokens expirent et se renouvellent automatiquement via le refresh token. Le courtier n'a rien a faire.</p>
+          </div>
+          <div class="bg-neo-pink/5 p-5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Revocation</div>
+            <p class="text-sm">Le courtier peut revoquer l'acces a tout moment depuis son compte Microsoft ou Google. Controle total.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11 — RELANCES -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 11 — Relances</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Les follow-ups aussi, depuis la boite du courtier</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Les relances automatiques a J+2 et J+5 suivent exactement le meme flow. Meme boite mail, meme confiance, meme delivrabilite.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <div class="neo-card-sm bg-neo-blue text-white p-4 text-center flex-1 min-w-[140px]">
+            <div class="font-bold font-mono text-lg">J+0</div>
+            <div class="text-xs mt-1 opacity-80">Envoi initial</div>
+          </div>
+          <div class="neo-card-sm bg-neo-yellow text-neo-black p-4 text-center flex-1 min-w-[140px]">
+            <div class="font-bold font-mono text-lg">J+2</div>
+            <div class="text-xs mt-1">1ere relance</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange text-white p-4 text-center flex-1 min-w-[140px]">
+            <div class="font-bold font-mono text-lg">J+5</div>
+            <div class="text-xs mt-1 opacity-80">2eme relance</div>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-6">Auto-stop si le client clique, repond, ou se desinscrit. Gere par un cron n8n.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 12 — CAMPAGNES CSV -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 12 — Campagnes CSV</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Import en masse, envoi intelligent</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Pour les imports CSV (envoi en masse), on espace les emails : <strong>1 email toutes les 30 secondes par courtier</strong>. Ca evite le throttling et ca respecte les limites des providers.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+          <div class="neo-card-sm bg-neo-blue/10 p-5">
+            <div class="font-bold text-neo-blue mb-2">Microsoft 365</div>
+            <div class="text-sm mb-3">Limite : 10,000 emails / 10 minutes</div>
+            <div class="bg-neo-gray h-3 rounded-full overflow-hidden">
+              <div class="progress-fill bg-neo-blue h-full rounded-full" style="width: 5%"></div>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">Usage pour 5 courtiers : ~1%</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange/10 p-5">
+            <div class="font-bold text-neo-orange mb-2">Gmail</div>
+            <div class="text-sm mb-3">Limite : 100 emails / jour (gratuit) / 2000 (Workspace)</div>
+            <div class="bg-neo-gray h-3 rounded-full overflow-hidden">
+              <div class="progress-fill bg-neo-orange h-full rounded-full" style="width: 15%"></div>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">Usage pour 5 courtiers : largement suffisant</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 13 — RESUME EMAIL -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 13 — Resume Email</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Avant / Apres : la difference</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b-3 border-neo-black">
+              <th class="py-3 px-4 font-grotesk">Critere</th>
+              <th class="py-3 px-4 font-grotesk text-neo-red">Avant (Brevo/tiers)</th>
+              <th class="py-3 px-4 font-grotesk text-neo-green">Apres (boite courtier)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-4 font-bold">Delivrabilite</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; Faible (spam/promo)</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; Excellente (inbox)</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-4 font-bold">Confiance client</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; Aucune</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; Maximale</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-4 font-bold">Risque spam</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; Eleve</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; Quasi nul</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-4 font-bold">Config DNS</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; SPF/DKIM/DMARC</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; Aucune</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-4 font-bold">Elements envoyes</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; Non</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; Oui</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-bold">Cout supplementaire</td>
+              <td class="py-3 px-4 text-neo-red">&#10007; Brevo payant</td>
+              <td class="py-3 px-4 text-neo-green">&#10003; 0&euro; (incl. M365/Gmail)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-8">
+      <div class="neo-card-sm bg-neo-green text-neo-black p-6 text-center">
+        <p class="font-grotesk text-xl font-bold">Probleme resolu. Inclus dans le MVP. Zero cout supplementaire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- PART 2: MAINTENANCE -->
+<!-- ============================================ -->
+<div id="part2" class="bg-neo-orange text-white py-12 px-4">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-yellow mb-4 font-bold">Partie 2 sur 3</div>
+      <h2 class="font-grotesk text-4xl sm:text-6xl font-bold">Maintenance</h2>
+      <p class="text-xl opacity-80 mt-4">Sections 14 a 23</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 14 — POURQUOI -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 14 — Pourquoi</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Pourquoi la maintenance est indispensable</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Hi Broker n'est pas un site vitrine. C'est une plateforme qui se connecte en temps reel a <strong>une dizaine de services externes</strong> : Google, Facebook, Instagram, LinkedIn, Microsoft 365, Gmail, Anthropic (IA), Apify (scraping), n8n (automation), Supabase (database).
+        </p>
+        <p class="text-lg leading-relaxed mb-6">
+          Chacun de ces services evolue. Les API changent, les tokens expirent, les quotas bougent, les politiques de securite se durcissent. Sans surveillance active, la plateforme se degrade en quelques semaines.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+          <div class="neo-card-sm bg-neo-blue text-white p-3 text-center text-xs font-bold">Google</div>
+          <div class="neo-card-sm bg-neo-blue text-white p-3 text-center text-xs font-bold">Facebook</div>
+          <div class="neo-card-sm bg-neo-pink text-white p-3 text-center text-xs font-bold">Instagram</div>
+          <div class="neo-card-sm bg-neo-blue text-white p-3 text-center text-xs font-bold">LinkedIn</div>
+          <div class="neo-card-sm bg-neo-blue text-white p-3 text-center text-xs font-bold">M365</div>
+          <div class="neo-card-sm bg-neo-red text-white p-3 text-center text-xs font-bold">Gmail</div>
+          <div class="neo-card-sm bg-neo-purple text-white p-3 text-center text-xs font-bold">Anthropic</div>
+          <div class="neo-card-sm bg-neo-green text-white p-3 text-center text-xs font-bold">n8n</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 15 — SURVEILLANCE -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 15 — Surveillance & Monitoring</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Tout est surveille en continu</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Uptime serveur</strong> — Monitoring continu du VPS, alertes en cas de downtime</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Workflows n8n</strong> — Verification que chaque workflow s'execute correctement</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Connexions OAuth</strong> — Suivi des tokens de chaque courtier (Facebook, Google, M365, LinkedIn)</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Detection d'expiration</strong> — Alertes avant expiration des tokens, renouvellement automatique</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Files d'emails</strong> — Suivi des envois, detection des erreurs, gestion des rebonds</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#128994;</span>
+            <div><strong>Performance BDD</strong> — Temps de requete, taille des tables, index, optimisations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 16 — SECURITE MAINTENANCE -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-pink mb-4 font-bold">Section 16 — Securite</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Mises a jour et protection</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Dependances</div>
+            <p class="text-sm">Mise a jour reguliere des packages npm, verification des vulnerabilites connues (npm audit).</p>
+          </div>
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Patches securite</div>
+            <p class="text-sm">Application immediate des patches critiques. Surveillance des CVE.</p>
+          </div>
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">RLS Supabase</div>
+            <p class="text-sm">Verification reguliere des Row-Level Security policies. Chaque courtier ne voit que ses donnees.</p>
+          </div>
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Chiffrement tokens</div>
+            <p class="text-sm">Rotation des cles de chiffrement, verification de l'integrite des tokens stockes.</p>
+          </div>
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Backups quotidiens</div>
+            <p class="text-sm">Sauvegarde automatique chaque jour. Retention 30 jours. Capacite de restauration testee.</p>
+          </div>
+          <div class="p-5 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-2">Veille API</div>
+            <p class="text-sm">Surveillance des changelogs Meta, Google, Microsoft, Anthropic. Adaptation proactive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 17 — BUGS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-red mb-4 font-bold">Section 17 — Correction de bugs</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">SLA clairs et simples</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="neo-card bg-neo-red text-white p-8">
+          <div class="text-4xl font-bold font-mono mb-2">12h</div>
+          <div class="font-grotesk text-xl font-bold mb-3">Bugs critiques</div>
+          <p class="opacity-90">Plateforme inaccessible, envoi d'emails bloque, perte de donnees. Intervention dans les 12 heures ouvrees.</p>
+        </div>
+        <div class="neo-card bg-neo-yellow text-neo-black p-8">
+          <div class="text-4xl font-bold font-mono mb-2">24h</div>
+          <div class="font-grotesk text-xl font-bold mb-3">Bugs standard</div>
+          <p>Affichage incorrect, fonctionnalite degradee, erreur non bloquante. Intervention dans les 24 heures ouvrees.</p>
+        </div>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-6">
+      <div class="neo-card-sm bg-white p-4">
+        <p class="text-sm text-gray-600">Tests de non-regression apres chaque correction. On ne repare pas un truc pour en casser un autre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 18 — INFRASTRUCTURE -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 18 — Infrastructure</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Serveur, base, services : tout inclus</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="space-y-4">
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Gestion serveur</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Mises a jour OS, certificats SSL, monitoring disque et RAM, optimisation performances. VPS Hetzner Allemagne.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Optimisation BDD</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Au fur et a mesure que les donnees grossissent : optimisation des requetes, ajout d'index, archivage si necessaire.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Quotas tiers</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Surveillance des quotas API (Meta, Google, Microsoft, Anthropic). Alertes avant depassement. Optimisation des appels.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Hebergement inclus</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Les couts d'hebergement (VPS, Supabase, domaines, SSL) sont inclus dans les 900&euro;/mois. Pas de surprise.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 19 — EVOLUTIONS MINEURES -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 19 — Evolutions mineures</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Les petits ajustements sont inclus</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Le forfait maintenance couvre les ajustements courants. Pas besoin de devis a chaque petite modif.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Ajustements UI (couleurs, textes, marges)</span>
+          </div>
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Modifications de templates email</span>
+          </div>
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Changements de templates de publication</span>
+          </div>
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Ajout de champs dans les formulaires</span>
+          </div>
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Ajustements des prompts IA</span>
+          </div>
+          <div class="flex items-start gap-3 p-3">
+            <span class="text-neo-green font-bold">&#10003;</span>
+            <span>Petites ameliorations fonctionnelles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 20 — SUIVI -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 20 — Suivi & Communication</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">On reste en contact</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="neo-card bg-neo-blue text-white p-6">
+          <div class="text-3xl mb-3">&#128222;</div>
+          <div class="font-bold font-grotesk text-lg mb-2">Call mensuel</div>
+          <p class="opacity-90 text-sm">Un point chaque mois pour faire le bilan : incidents, resolutions, metriques, suggestions d'amelioration.</p>
+        </div>
+        <div class="neo-card bg-neo-blue text-white p-6">
+          <div class="text-3xl mb-3">&#128202;</div>
+          <div class="font-bold font-grotesk text-lg mb-2">Rapport mensuel</div>
+          <p class="opacity-90 text-sm">Document ecrit avec : incidents du mois, resolutions, metriques de performance, recommendations.</p>
+        </div>
+        <div class="neo-card bg-neo-blue text-white p-6">
+          <div class="text-3xl mb-3">&#128172;</div>
+          <div class="font-bold font-grotesk text-lg mb-2">Canal direct</div>
+          <p class="opacity-90 text-sm">Pour les urgences, un canal de communication direct (email, messaging). Pas besoin de passer par un ticket.</p>
+        </div>
+        <div class="neo-card bg-neo-blue text-white p-6">
+          <div class="text-3xl mb-3">&#128161;</div>
+          <div class="font-bold font-grotesk text-lg mb-2">Recommendations</div>
+          <p class="opacity-90 text-sm">Suggestions proactives d'amelioration basees sur l'usage reel de la plateforme.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 21 — NON INCLUS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-red mb-4 font-bold">Section 21 — Non inclus</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Ce qui n'est pas dans le forfait</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Pour etre transparent, voici ce qui sort du cadre de la maintenance et qui fait l'objet d'un devis separe :
+        </p>
         <div class="space-y-3">
-          <div class="flow-step">
-            <span class="text-lg">&#128205;</span>
-            Adresse du courtier
+          <div class="flex items-start gap-3 p-3 bg-neo-red/5 border-l-4 border-neo-red">
+            <span class="text-neo-red font-bold">&#10007;</span>
+            <span>Nouveaux modules complets (fonctionnalites majeures non prevues)</span>
           </div>
-          <div class="text-center flow-arrow">&darr;</div>
-          <div class="flow-step">
-            <span class="text-lg">&#128270;</span>
-            Apify cherche les courtiers dans la zone
+          <div class="flex items-start gap-3 p-3 bg-neo-red/5 border-l-4 border-neo-red">
+            <span class="text-neo-red font-bold">&#10007;</span>
+            <span>Refonte complete de l'UI ou de l'architecture</span>
           </div>
-          <div class="text-center flow-arrow">&darr;</div>
-          <div class="flow-step">
-            <span class="text-lg">&#127942;</span>
-            Concurrents importes en base (note, nb avis)
+          <div class="flex items-start gap-3 p-3 bg-neo-red/5 border-l-4 border-neo-red">
+            <span class="text-neo-red font-bold">&#10007;</span>
+            <span>Nouvelles integrations de plateformes non prevues initialement</span>
           </div>
-          <div class="text-center flow-arrow">&darr;</div>
-          <div class="flow-step">
-            <span class="text-lg">&#128200;</span>
-            Le courtier voit ses concurrents sur le dashboard
+          <div class="flex items-start gap-3 p-3 bg-neo-red/5 border-l-4 border-neo-red">
+            <span class="text-neo-red font-bold">&#10007;</span>
+            <span>Formation d'equipes</span>
           </div>
+        </div>
+        <div class="neo-card-sm bg-neo-yellow p-4 mt-6 text-center">
+          <p class="font-bold">Ces elements sont quottes separement a <span class="font-mono">450&euro; HT / jour</span></p>
         </div>
       </div>
     </div>
-    <div class="anim mt-6">
-      <div class="priority-high p-4 neo-border-2">
-        <div class="font-mono text-xs font-bold text-red-600 mb-1">IMPORTANT</div>
-        <div class="font-space text-sm">Si l'extraction echoue &rarr; retry automatique. Si ca prend du temps &rarr; loader visible. A la fin de l'onboarding, le courtier <strong>DOIT</strong> avoir ses avis et ses concurrents. Pas d'exception.</div>
+  </div>
+</section>
+
+<!-- SECTION 22 — TARIF -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 22 — Tarif</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Simple et clair</h2>
+    </div>
+    <div class="animate-on-scroll bounce stagger-2">
+      <div class="neo-card bg-neo-green text-neo-black p-10 sm:p-14 inline-block">
+        <div class="font-mono text-6xl sm:text-8xl font-bold mb-2">900&euro;</div>
+        <div class="font-grotesk text-2xl font-bold mb-4">HT / mois</div>
+        <div class="text-lg opacity-80 max-w-md mx-auto">
+          Tout inclus : surveillance, securite, bugs, infra, hebergement, evolutions mineures, support.
+        </div>
+        <div class="mt-6 text-sm opacity-60">Pas de frais caches. Pas de surprise.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 23 — CONDITIONS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 23 — Conditions</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Les termes</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">Engagement</div>
+          <p>3 mois, renouvelable tacitement</p>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">Preavis</div>
+          <p>1 mois de preavis pour resilier</p>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">Facturation</div>
+          <p>Mensuelle, debut de mois</p>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">Support</div>
+          <p>Lundi — Vendredi, 9h — 18h</p>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">SLA Critique</div>
+          <p>Intervention sous 12 heures ouvrees</p>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="font-bold font-grotesk text-lg mb-2">SLA Standard</div>
+          <p>Intervention sous 24 heures ouvrees</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 11 — NOUVELLE ETAPE : SITE WEB -->
+<!-- PART 3: SCOPE MVP -->
 <!-- ============================================ -->
-<section id="siteweb" class="py-20 px-4 bg-neo-dark text-white" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number text-gray-400 mb-4">11 / NOUVELLE ETAPE</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Analyse du site web.</h2>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-6">
-        On ajoute une <strong class="text-white">nouvelle etape dans l'onboarding</strong> : le site web du courtier. L'idee c'est simple : le courtier entre l'URL de son site, et l'IA l'analyse pour donner des recommandations.
-      </p>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-8">
-        C'est pas obligatoire. Si le courtier n'a pas de site, il peut passer a la suite.
-      </p>
+<div id="part3" class="bg-neo-green text-neo-black py-12 px-4">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-black mb-4 font-bold">Partie 3 sur 3</div>
+      <h2 class="font-grotesk text-4xl sm:text-6xl font-bold">Scope MVP — 16,500&euro;</h2>
+      <p class="text-xl opacity-80 mt-4">Sections 24 a 48</p>
     </div>
-    <div class="anim">
-      <div class="neo-card p-2" style="border-color:#333;box-shadow:6px 6px 0 rgba(255,255,255,.1)">
-        <img src="screenshot-onboarding-ia.png" alt="Onboarding - personnalisation IA avec apercu profil" class="w-full" style="display:block">
+  </div>
+</div>
+
+<!-- SECTION 24 — VUE D'ENSEMBLE ADVICE -->
+<section class="py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 24 — Vue d'ensemble Advice</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-4">Module Advice</h2>
+      <p class="text-gray-500 text-lg mb-12">Gestion complete des avis clients, sollicitations, reclamations et analyse IA.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="animate-on-scroll from-bottom stagger-1 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#9993;</div>
+        <div class="font-bold">Sollicitation 3 modes</div>
+        <div class="text-sm text-gray-500 mt-1">Manuel, CSV, Webhook CRM</div>
       </div>
-      <p class="img-caption text-gray-500">L'etape IA actuelle &mdash; la nouvelle etape "Site web" s'ajoute juste avant</p>
+      <div class="animate-on-scroll from-bottom stagger-2 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128257;</div>
+        <div class="font-bold">Relances auto</div>
+        <div class="text-sm text-gray-500 mt-1">J+0, J+2, J+5</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-3 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#127760;</div>
+        <div class="font-bold">Page tampon</div>
+        <div class="text-sm text-gray-500 mt-1">URL personnalisee par courtier</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-4 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128268;</div>
+        <div class="font-bold">Routage intelligent</div>
+        <div class="text-sm text-gray-500 mt-1">Positif &rarr; Google, Negatif &rarr; interne</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-5 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128220;</div>
+        <div class="font-bold">Registre ACPR/FSMA</div>
+        <div class="text-sm text-gray-500 mt-1">Reclamations conformes</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-6 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#129302;</div>
+        <div class="font-bold">Analyse IA</div>
+        <div class="text-sm text-gray-500 mt-1">Sentiment, themes, reponses</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-7 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128269;</div>
+        <div class="font-bold">Scraping Google</div>
+        <div class="text-sm text-gray-500 mt-1">Detection auto des avis</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-8 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128200;</div>
+        <div class="font-bold">Veille concurrentielle</div>
+        <div class="text-sm text-gray-500 mt-1">Tracking des concurrents</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-8 neo-card-sm bg-neo-blue/5 p-5">
+        <div class="text-2xl mb-2">&#128218;</div>
+        <div class="font-bold">Documents ACPR (RAG)</div>
+        <div class="text-sm text-gray-500 mt-1">Procedure + templates IA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 25 — SOLLICITATION 3 MODES -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 25 — Sollicitation 3 modes</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">3 facons de solliciter un avis</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="animate-on-scroll from-bottom stagger-1">
+        <div class="neo-card bg-white p-6 h-full">
+          <div class="neo-card-sm bg-neo-blue text-white w-12 h-12 flex items-center justify-center font-bold font-mono mb-4">1</div>
+          <h3 class="font-grotesk text-xl font-bold mb-3">Manuel</h3>
+          <p class="text-sm text-gray-600 mb-4">Le courtier entre l'email du client, personnalise le message si besoin, et envoie. Simple et direct.</p>
+          <div class="code-block bg-neo-gray p-3 text-xs">
+            email: client@example.com<br>
+            template: defaut<br>
+            &rarr; Envoi immediat
+          </div>
+        </div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-2">
+        <div class="neo-card bg-white p-6 h-full">
+          <div class="neo-card-sm bg-neo-orange text-white w-12 h-12 flex items-center justify-center font-bold font-mono mb-4">2</div>
+          <h3 class="font-grotesk text-xl font-bold mb-3">Import CSV</h3>
+          <p class="text-sm text-gray-600 mb-4">Upload d'un fichier CSV. Mapping des colonnes (email, nom, prenom). Preview avant envoi. Espacement automatique.</p>
+          <div class="code-block bg-neo-gray p-3 text-xs">
+            fichier.csv (150 lignes)<br>
+            mapping: col A = email<br>
+            &rarr; 1 email / 30s
+          </div>
+        </div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-3">
+        <div class="neo-card bg-white p-6 h-full">
+          <div class="neo-card-sm bg-neo-green text-white w-12 h-12 flex items-center justify-center font-bold font-mono mb-4">3</div>
+          <h3 class="font-grotesk text-xl font-bold mb-3">Webhook CRM</h3>
+          <p class="text-sm text-gray-600 mb-4">Brio ou Penbox envoie un webhook quand un dossier est cloture. La sollicitation part automatiquement.</p>
+          <div class="code-block bg-neo-gray p-3 text-xs">
+            POST /webhook/brio<br>
+            payload: {client, email}<br>
+            &rarr; Sollicitation auto
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 26 — RELANCES AUTO -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 26 — Relances automatiques</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">J+0, J+2, J+5</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <div class="flex-1 bg-neo-blue/10 p-5 border-t-4 border-neo-blue text-center">
+            <div class="font-mono font-bold text-2xl text-neo-blue">J+0</div>
+            <div class="text-sm mt-2">Envoi initial de la sollicitation</div>
+          </div>
+          <div class="flex items-center justify-center text-2xl font-bold text-gray-300 hidden sm:flex">&rarr;</div>
+          <div class="flex-1 bg-neo-yellow/20 p-5 border-t-4 border-neo-yellow text-center">
+            <div class="font-mono font-bold text-2xl text-neo-orange">J+2</div>
+            <div class="text-sm mt-2">1ere relance si pas de reponse</div>
+          </div>
+          <div class="flex items-center justify-center text-2xl font-bold text-gray-300 hidden sm:flex">&rarr;</div>
+          <div class="flex-1 bg-neo-orange/10 p-5 border-t-4 border-neo-orange text-center">
+            <div class="font-mono font-bold text-2xl text-neo-red">J+5</div>
+            <div class="text-sm mt-2">Derniere relance</div>
+          </div>
+        </div>
+        <div class="bg-neo-green/5 p-4 border-l-4 border-neo-green">
+          <p class="text-sm"><strong>Auto-stop intelligent :</strong> La sequence s'arrete automatiquement si le client clique sur le lien, repond a la sollicitation, ou se desinscrit. Gere par un cron n8n qui verifie le statut avant chaque relance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 27 — PAGE TAMPON -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 27 — Page tampon</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Une page personnalisee par courtier</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="bg-neo-gray p-6 rounded mb-6">
+          <div class="font-mono text-sm text-gray-500 mb-4">https://hibroker.be/avis/<strong class="text-neo-blue">cabinet-dupont</strong></div>
+          <div class="bg-white p-6 border-2 border-gray-200">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-neo-blue border-2 border-neo-black flex items-center justify-center text-white font-bold">CD</div>
+              <div>
+                <div class="font-bold">Cabinet Dupont</div>
+                <div class="text-sm text-gray-500">Votre avis compte pour nous</div>
+              </div>
+            </div>
+            <div class="flex gap-2 mb-4">
+              <span class="text-3xl cursor-pointer text-neo-yellow">&#9733;</span>
+              <span class="text-3xl cursor-pointer text-neo-yellow">&#9733;</span>
+              <span class="text-3xl cursor-pointer text-neo-yellow">&#9733;</span>
+              <span class="text-3xl cursor-pointer text-neo-yellow">&#9733;</span>
+              <span class="text-3xl cursor-pointer text-gray-300">&#9733;</span>
+            </div>
+            <div class="bg-neo-gray p-3 text-sm text-gray-400 mb-4">Votre commentaire...</div>
+            <div class="neo-btn bg-neo-blue text-white px-4 py-2 text-sm font-bold inline-block">Envoyer mon avis</div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Logo + couleurs du courtier</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Note 5 etoiles + commentaire</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Mobile responsive</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Ecran de remerciement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 28 — ROUTAGE INTELLIGENT -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-yellow mb-4 font-bold">Section 28 — Routage intelligent</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Positif &rarr; Google. Negatif &rarr; interne.</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="neo-card bg-neo-green/10 p-8 border-neo-green" style="border-color: #06d6a0;">
+          <div class="text-4xl mb-3">&#11088;&#11088;&#11088;&#11088; +</div>
+          <h3 class="font-grotesk text-xl font-bold mb-3 text-neo-green">4 ou 5 etoiles</h3>
+          <p class="text-sm mb-4">Le client est satisfait. On lui propose de publier son avis sur Google avec un CTA direct.</p>
+          <div class="neo-btn bg-neo-green text-neo-black px-4 py-2 text-sm font-bold inline-block">Laisser un avis Google &rarr;</div>
+        </div>
+        <div class="neo-card bg-neo-red/10 p-8 border-neo-red" style="border-color: #ef233c;">
+          <div class="text-4xl mb-3">&#11088;&#11088;&#11088; -</div>
+          <h3 class="font-grotesk text-xl font-bold mb-3 text-neo-red">3 etoiles ou moins</h3>
+          <p class="text-sm mb-4">Le client est insatisfait. L'avis reste interne. <strong>JAMAIS redirige vers Google.</strong> Traite comme une reclamation potentielle.</p>
+          <div class="neo-card-sm bg-neo-red/20 px-3 py-2 text-xs font-bold text-neo-red inline-block">Traitement interne uniquement</div>
+        </div>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-6">
+      <div class="neo-card-sm bg-white p-4 text-center">
+        <span class="font-mono text-sm">Routage instantane, &lt;30 secondes apres la soumission</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 29 — REGISTRE RECLAMATIONS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-red mb-4 font-bold">Section 29 — Registre reclamations ACPR/FSMA</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Conforme a la reglementation</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Chaque avis negatif alimente automatiquement le registre des reclamations. Les champs sont pre-remplis avec les informations de la sollicitation.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div class="text-sm p-3 bg-neo-gray"><strong>Date</strong> — Auto-remplie</div>
+          <div class="text-sm p-3 bg-neo-gray"><strong>Canal</strong> — Email / Page tampon</div>
+          <div class="text-sm p-3 bg-neo-gray"><strong>Info client</strong> — Nom, email, telephone</div>
+          <div class="text-sm p-3 bg-neo-gray"><strong>Sujet</strong> — Categorie detectee par IA</div>
+          <div class="text-sm p-3 bg-neo-gray"><strong>Description</strong> — Commentaire du client</div>
+          <div class="text-sm p-3 bg-neo-gray"><strong>Statut</strong> — Nouveau / En cours / Cloture</div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="neo-card-sm bg-neo-blue/10 p-4">
+            <div class="font-bold text-neo-blue">Belgique (FSMA)</div>
+            <div class="text-sm">Delai configurable : 1 mois</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange/10 p-4">
+            <div class="font-bold text-neo-orange">France (ACPR)</div>
+            <div class="text-sm">Delai configurable : 2 mois</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Export Excel</span>
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Retention 5 ans</span>
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Alertes delais</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 30 — DOCUMENTS ACPR RAG -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 30 — Documents ACPR integres (mini-RAG)</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">L'IA respecte ta procedure</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Ta procedure ACPR de traitement des reclamations et tes modeles de reponse sont stockes dans Supabase. Quand l'IA genere une reponse a une reclamation, elle <strong>doit respecter ta procedure</strong> et <strong>utiliser tes templates</strong>.
+        </p>
+        <div class="space-y-4">
+          <div class="bg-neo-purple/5 p-4 border-l-4 border-neo-purple">
+            <div class="font-bold mb-1">Accuse de reception</div>
+            <p class="text-sm">Modele d'accuse de reception conforme, genere automatiquement avec les infos du dossier.</p>
+          </div>
+          <div class="bg-neo-purple/5 p-4 border-l-4 border-neo-purple">
+            <div class="font-bold mb-1">Information mediateur</div>
+            <p class="text-sm">Le mediateur competent est mentionne automatiquement dans les reponses (assurance, banque, etc.).</p>
+          </div>
+          <div class="bg-neo-purple/5 p-4 border-l-4 border-neo-purple">
+            <div class="font-bold mb-1">Structure de reponse formelle</div>
+            <p class="text-sm">L'IA suit la structure imposee par la procedure : contexte, analyse, decision, voies de recours.</p>
+          </div>
+        </div>
+        <div class="mt-6 neo-card-sm bg-neo-purple/10 p-4 text-sm">
+          <strong>Techniquement :</strong> Les documents sont stockes dans Supabase, connectes au LLM via le prompt systeme. L'IA les utilise comme reference, pas comme suggestion.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 31 — ANALYSE IA -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 31 — Analyse IA</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Claude analyse chaque avis</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Chaque avis passe par Claude (Anthropic) pour une analyse automatique. Pas juste un score, une vraie comprehension du feedback.
+        </p>
+        <div class="grid sm:grid-cols-3 gap-6 mb-6">
+          <div class="text-center">
+            <div class="font-mono text-4xl font-bold text-neo-green mb-1">+0.8</div>
+            <div class="text-sm text-gray-500">Score sentiment</div>
+            <div class="bg-neo-gray h-3 rounded-full overflow-hidden mt-2">
+              <div class="progress-fill bg-neo-green h-full rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-4xl font-bold text-neo-yellow mb-1">-0.2</div>
+            <div class="text-sm text-gray-500">Score sentiment</div>
+            <div class="bg-neo-gray h-3 rounded-full overflow-hidden mt-2">
+              <div class="progress-fill bg-neo-yellow h-full rounded-full" style="width: 40%"></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-4xl font-bold text-neo-red mb-1">-0.9</div>
+            <div class="text-sm text-gray-500">Score sentiment</div>
+            <div class="bg-neo-gray h-3 rounded-full overflow-hidden mt-2">
+              <div class="progress-fill bg-neo-red h-full rounded-full" style="width: 5%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="font-bold mb-3">Themes detectes automatiquement :</div>
+        <div class="flex flex-wrap gap-2">
+          <span class="neo-card-sm bg-neo-blue/10 px-3 py-1 text-sm">Delai</span>
+          <span class="neo-card-sm bg-neo-orange/10 px-3 py-1 text-sm">Prix</span>
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Communication</span>
+          <span class="neo-card-sm bg-neo-purple/10 px-3 py-1 text-sm">Disponibilite</span>
+          <span class="neo-card-sm bg-neo-yellow/20 px-3 py-1 text-sm">Conseil</span>
+          <span class="neo-card-sm bg-neo-pink/10 px-3 py-1 text-sm">Suivi</span>
+          <span class="neo-card-sm bg-neo-red/10 px-3 py-1 text-sm">Sinistre</span>
+          <span class="neo-card-sm bg-neo-blue/10 px-3 py-1 text-sm">Accueil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 32 — IA PERSONNALISEE -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-pink mb-4 font-bold">Section 32 — IA personnalisee par courtier</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Chaque courtier a son IA</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          C'est un point important : l'IA ne genere pas des reponses generiques. <strong>Chaque courtier a un profil IA personnalise</strong>. L'IA s'adapte a son style de communication, ses produits d'assurance, et sa clientele.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-6 mb-6">
+          <div class="neo-card bg-neo-pink/5 p-6" style="border-color: #f72585;">
+            <div class="font-bold font-grotesk mb-3">Courtier A — Formel</div>
+            <div class="bg-white p-4 text-sm italic border-l-4 border-neo-pink">
+              "Madame, nous avons bien pris note de votre retour et nous tenons a vous assurer que nous prenons cette situation tres au serieux..."
+            </div>
+          </div>
+          <div class="neo-card bg-neo-blue/5 p-6" style="border-color: #4361ee;">
+            <div class="font-bold font-grotesk mb-3">Courtier B — Decontracte</div>
+            <div class="bg-white p-4 text-sm italic border-l-4 border-neo-blue">
+              "Bonjour Marie, merci pour votre retour ! Je comprends que le delai vous a frustree et je m'en excuse. On va regler ca rapidement..."
+            </div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>Onboarding :</strong> Le courtier choisit son style (formel/decontracte, technique/simple)</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>Produits :</strong> L'IA connait les produits specifiques du courtier</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>Apprentissage :</strong> L'IA s'ameliore a partir des modifications manuelles du courtier</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>Resultat :</strong> Le courtier A sonne comme le courtier A, pas comme un template generique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 33 — REPONSES IA -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 33 — Reponses IA</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">3 variantes de ton</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="neo-card bg-white p-6">
+          <div class="neo-card-sm bg-neo-blue text-white px-3 py-1 text-xs font-bold inline-block mb-4">PROFESSIONNEL</div>
+          <p class="text-sm italic text-gray-600">"Nous accusons reception de votre reclamation en date du 15/02/2026. Conformement a notre procedure interne, nous nous engageons a vous apporter une reponse dans un delai de..."</p>
+          <div class="mt-4 text-xs text-gray-400">Ton formel, structure ACPR</div>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="neo-card-sm bg-neo-orange text-white px-3 py-1 text-xs font-bold inline-block mb-4">EMPATHIQUE</div>
+          <p class="text-sm italic text-gray-600">"Bonjour Monsieur Martin, je comprends parfaitement votre frustration et je tiens a m'excuser pour cette experience. Votre satisfaction est notre priorite et je vais personnellement..."</p>
+          <div class="mt-4 text-xs text-gray-400">Ton personnel, chaleureux</div>
+        </div>
+        <div class="neo-card bg-white p-6">
+          <div class="neo-card-sm bg-neo-green text-neo-black px-3 py-1 text-xs font-bold inline-block mb-4">DIRECT</div>
+          <p class="text-sm italic text-gray-600">"Bonjour, merci pour votre retour. Le probleme de delai que vous mentionnez est note. Je reviens vers vous sous 48h avec une solution concrete."</p>
+          <div class="mt-4 text-xs text-gray-400">Concis, factuel</div>
+        </div>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-6">
+      <div class="neo-card-sm bg-white p-4 text-sm text-center">
+        Le courtier choisit sa variante preferee et la copie-colle. Il peut aussi editer avant envoi.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 34 — SCRAPING GOOGLE -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 34 — Scraping Google</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Detection automatique des avis Google</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Chaque jour a 6h du matin, un scraper automatise (Apify) passe en revue les fiches Google de chaque courtier. Il detecte les nouveaux avis, les modifications, et les suppressions.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-6 mb-6">
+          <div class="bg-neo-blue/5 p-4 border-l-4 border-neo-blue">
+            <div class="font-bold mb-1">Nouveaux avis</div>
+            <p class="text-sm">Detectes et importes automatiquement dans le dashboard.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Avis modifies</div>
+            <p class="text-sm">Changements de note ou de commentaire detectes et historises.</p>
+          </div>
+          <div class="bg-neo-red/5 p-4 border-l-4 border-neo-red">
+            <div class="font-bold mb-1">Avis supprimes</div>
+            <p class="text-sm">On le sait. L'historique reste dans notre base.</p>
+          </div>
+          <div class="bg-neo-pink/5 p-4 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">Alerte negative</div>
+            <p class="text-sm">Notification immediate si un avis &le;2 etoiles est publie.</p>
+          </div>
+        </div>
+        <div class="neo-card-sm bg-neo-green/10 p-4 text-sm">
+          <strong>Bonus :</strong> On peut lier les sollicitations internes aux avis Google publies. Si un client a ete sollicite et publie ensuite un avis Google, on le sait.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 35 — VEILLE CONCURRENTIELLE -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 35 — Veille concurrentielle</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Surveiller la concurrence</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Le systeme detecte automatiquement les concurrents par zone geographique. Chaque semaine, on scrape leurs avis Google pour suivre leur evolution.
+        </p>
+        <div class="space-y-4 mb-6">
+          <div class="flex items-center gap-4">
+            <div class="font-mono text-sm w-32 flex-shrink-0">Cabinet X</div>
+            <div class="flex-1 bg-neo-gray h-4 rounded-full overflow-hidden">
+              <div class="progress-fill bg-neo-green h-full rounded-full" style="width: 85%"></div>
+            </div>
+            <div class="font-mono text-sm w-12">4.3/5</div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="font-mono text-sm w-32 flex-shrink-0 font-bold text-neo-blue">Toi</div>
+            <div class="flex-1 bg-neo-gray h-4 rounded-full overflow-hidden">
+              <div class="progress-fill bg-neo-blue h-full rounded-full" style="width: 92%"></div>
+            </div>
+            <div class="font-mono text-sm w-12 font-bold">4.6/5</div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="font-mono text-sm w-32 flex-shrink-0">Cabinet Y</div>
+            <div class="flex-1 bg-neo-gray h-4 rounded-full overflow-hidden">
+              <div class="progress-fill bg-neo-orange h-full rounded-full" style="width: 78%"></div>
+            </div>
+            <div class="font-mono text-sm w-12">3.9/5</div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Note moyenne et volume d'avis</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Evolution hebdomadaire</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Analyse IA des themes concurrents</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> Alerte si un concurrent te depasse</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 12 — COMMENT CA MARCHE -->
+<!-- MODULE CONNECT -->
 <!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">12 / SITE WEB &mdash; LE PARCOURS</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Comment ca marche.</h2>
+
+<!-- SECTION 36 — VUE D'ENSEMBLE CONNECT -->
+<section class="py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 36 — Vue d'ensemble Connect</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-4">Module Connect</h2>
+      <p class="text-gray-500 text-lg mb-12">Publication multi-reseaux, personnalisation visuelle, statistiques d'engagement.</p>
     </div>
-    <div class="anim">
-      <div class="neo-card p-6 sm:p-8">
-        <div class="space-y-6">
-          <!-- Step 1 -->
-          <div class="flex items-start gap-4">
-            <div class="neo-card-sm bg-neo-black text-white w-12 h-12 flex-shrink-0 flex items-center justify-center font-mono font-bold text-lg">1</div>
-            <div>
-              <div class="font-grotesk font-bold text-lg mb-1">Le courtier entre son URL</div>
-              <div class="font-space text-sm text-gray-500">Un champ simple : "https://www.mon-cabinet.fr". C'est tout.</div>
-            </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="animate-on-scroll from-bottom stagger-1 neo-card-sm bg-neo-orange/5 p-5">
+        <div class="text-2xl mb-2">&#128279;</div>
+        <div class="font-bold">OAuth multi-reseaux</div>
+        <div class="text-sm text-gray-500 mt-1">Facebook, Insta, LinkedIn, Google</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-2 neo-card-sm bg-neo-orange/5 p-5">
+        <div class="text-2xl mb-2">&#128221;</div>
+        <div class="font-bold">Creation contenu</div>
+        <div class="text-sm text-gray-500 mt-1">Articles, tips, templates</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-3 neo-card-sm bg-neo-orange/5 p-5">
+        <div class="text-2xl mb-2">&#127912;</div>
+        <div class="font-bold">Personnalisation visuelle</div>
+        <div class="text-sm text-gray-500 mt-1">Logo + couleurs auto par courtier</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-4 neo-card-sm bg-neo-orange/5 p-5">
+        <div class="text-2xl mb-2">&#128225;</div>
+        <div class="font-bold">Multidiffusion</div>
+        <div class="text-sm text-gray-500 mt-1">Publish simultane + filtrage</div>
+      </div>
+      <div class="animate-on-scroll from-bottom stagger-5 neo-card-sm bg-neo-orange/5 p-5">
+        <div class="text-2xl mb-2">&#128200;</div>
+        <div class="font-bold">Stats engagement</div>
+        <div class="text-sm text-gray-500 mt-1">Views, likes, comments, shares</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 37 — OAUTH & PUBLICATION -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 37 — OAuth & Publication multi-reseaux</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">4 reseaux, un seul clic</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="grid sm:grid-cols-2 gap-6 mb-6">
+          <div class="flex items-center gap-4 p-4 bg-neo-blue/5 border-l-4 border-neo-blue">
+            <span class="text-2xl">&#128308;</span>
+            <div><strong>Facebook</strong> — Via Meta Graph API. Pages du courtier.</div>
           </div>
-          <!-- Step 2 -->
-          <div class="flex items-start gap-4">
-            <div class="neo-card-sm bg-neo-black text-white w-12 h-12 flex-shrink-0 flex items-center justify-center font-mono font-bold text-lg">2</div>
-            <div>
-              <div class="font-grotesk font-bold text-lg mb-1">Il clique sur "Analyser"</div>
-              <div class="font-space text-sm text-gray-500">Un gros bouton bien visible. L'IA se met au travail.</div>
-            </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <span class="text-2xl">&#128247;</span>
+            <div><strong>Instagram</strong> — Via Meta (meme token). Posts feed.</div>
           </div>
-          <!-- Step 3 -->
-          <div class="flex items-start gap-4">
-            <div class="neo-card-sm bg-neo-black text-white w-12 h-12 flex-shrink-0 flex items-center justify-center font-mono font-bold text-lg">3</div>
-            <div>
-              <div class="font-grotesk font-bold text-lg mb-1">L'IA analyse le site</div>
-              <div class="font-space text-sm text-gray-500">Claude scrape le contenu du site et analyse : design, contenu, SEO, mentions legales, confiance client...</div>
-            </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-blue/5 border-l-4 border-neo-blue">
+            <span class="text-2xl">&#128188;</span>
+            <div><strong>LinkedIn</strong> — OAuth 2.0. Posts sur page entreprise.</div>
           </div>
-          <!-- Step 4 -->
-          <div class="flex items-start gap-4">
-            <div class="neo-card-sm bg-neo-black text-white w-12 h-12 flex-shrink-0 flex items-center justify-center font-mono font-bold text-lg">4</div>
-            <div>
-              <div class="font-grotesk font-bold text-lg mb-1">Le resultat s'affiche</div>
-              <div class="font-space text-sm text-gray-500">Le courtier voit un rapport clair avec les points forts, les points faibles, et des recommandations concretes.</div>
-            </div>
+          <div class="flex items-center gap-4 p-4 bg-neo-green/5 border-l-4 border-neo-green">
+            <span class="text-2xl">&#127760;</span>
+            <div><strong>Google Business</strong> — Posts sur fiche Google.</div>
+          </div>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div class="flex items-start gap-2"><span class="text-neo-green font-bold">&#10003;</span> Connexion OAuth pendant l'onboarding (un seul clic par reseau)</div>
+          <div class="flex items-start gap-2"><span class="text-neo-green font-bold">&#10003;</span> Token auto-refresh (le courtier n'a jamais a se reconnecter)</div>
+          <div class="flex items-start gap-2"><span class="text-neo-green font-bold">&#10003;</span> Monitoring du statut de chaque connexion</div>
+          <div class="flex items-start gap-2"><span class="text-neo-green font-bold">&#10003;</span> Publication simultanee sur tous les reseaux connectes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 38 — CREATION CONTENU -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 38 — Creation contenu & Templates</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">L'admin cree, les courtiers publient</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          L'admin cree des articles et des tips depuis le back-office. Il utilise des templates avec des variables JSON qui sont personnalisees pour chaque courtier.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="bg-neo-purple/5 p-5 border-l-4 border-neo-purple">
+            <div class="font-bold mb-2">Articles & Tips</div>
+            <p class="text-sm">L'admin redige le contenu. Variables disponibles : {nom_courtier}, {ville}, {specialite}, etc.</p>
+          </div>
+          <div class="bg-neo-purple/5 p-5 border-l-4 border-neo-purple">
+            <div class="font-bold mb-2">Bibliotheque de templates</div>
+            <p class="text-sm">Templates reutilisables avec variables JSON. Gain de temps massif.</p>
+          </div>
+          <div class="bg-neo-purple/5 p-5 border-l-4 border-neo-purple">
+            <div class="font-bold mb-2">Brouillon & Preview</div>
+            <p class="text-sm">Sauvegarde en brouillon, preview avant publication. Pas de mauvaise surprise.</p>
+          </div>
+          <div class="bg-neo-purple/5 p-5 border-l-4 border-neo-purple">
+            <div class="font-bold mb-2">Planification</div>
+            <p class="text-sm">Programmer la publication a une date/heure precise. Cibler par compagnie ou branche.</p>
           </div>
         </div>
       </div>
     </div>
-    <!-- Skip option -->
-    <div class="anim mt-8">
-      <div class="neo-card p-6 bg-neo-gray">
-        <div class="flex items-center gap-4">
-          <div class="text-3xl">&#128683;</div>
+  </div>
+</section>
+
+<!-- SECTION 39 — PERSONNALISATION VISUELLE -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-pink mb-4 font-bold">Section 39 — Personnalisation visuelle automatique</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">5 courtiers, 5 visuels uniques</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Chaque publication genere un visuel unique pour chaque courtier. Le logo et les couleurs de marque sont appliques automatiquement. Un article, 5 versions, 5 identites visuelles distinctes.
+        </p>
+        <div class="flex flex-wrap gap-4 mb-6 justify-center">
+          <div class="neo-card-sm w-28 h-28 bg-neo-blue/10 flex flex-col items-center justify-center p-2">
+            <div class="w-8 h-8 bg-neo-blue border border-neo-black mb-1"></div>
+            <div class="text-xs font-bold">Courtier A</div>
+          </div>
+          <div class="neo-card-sm w-28 h-28 bg-neo-orange/10 flex flex-col items-center justify-center p-2">
+            <div class="w-8 h-8 bg-neo-orange border border-neo-black mb-1"></div>
+            <div class="text-xs font-bold">Courtier B</div>
+          </div>
+          <div class="neo-card-sm w-28 h-28 bg-neo-green/10 flex flex-col items-center justify-center p-2">
+            <div class="w-8 h-8 bg-neo-green border border-neo-black mb-1"></div>
+            <div class="text-xs font-bold">Courtier C</div>
+          </div>
+          <div class="neo-card-sm w-28 h-28 bg-neo-purple/10 flex flex-col items-center justify-center p-2">
+            <div class="w-8 h-8 bg-neo-purple border border-neo-black mb-1"></div>
+            <div class="text-xs font-bold">Courtier D</div>
+          </div>
+          <div class="neo-card-sm w-28 h-28 bg-neo-pink/10 flex flex-col items-center justify-center p-2">
+            <div class="w-8 h-8 bg-neo-pink border border-neo-black mb-1"></div>
+            <div class="text-xs font-bold">Courtier E</div>
+          </div>
+        </div>
+        <div class="neo-card-sm bg-neo-green/10 p-4 text-sm text-center">
+          <strong>Pre-genere et stocke</strong> avant la date de publication. Aucun delai au moment de publier.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 40 — MULTIDIFFUSION -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 40 — Multidiffusion & Filtrage</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Publication ciblee et intelligente</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">1</div>
+            <div><strong>Cron a l'heure programmee</strong> — Le workflow n8n se declenche a la date/heure prevue.</div>
+          </div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">2</div>
+            <div><strong>Filtrage courtiers</strong> — Selection des courtiers concernes (par compagnie, par branche).</div>
+          </div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">3</div>
+            <div><strong>Publication multi-reseaux</strong> — Pour chaque courtier, post sur ses reseaux connectes avec son visuel personnalise.</div>
+          </div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">4</div>
+            <div><strong>Gestion d'erreurs</strong> — Si un post echoue (token expire, API down), retry automatique. Log des erreurs.</div>
+          </div>
+          <div class="schema-line w-8 ml-5"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-10 h-10 flex items-center justify-center font-bold font-mono flex-shrink-0">5</div>
+            <div><strong>Rate limiting</strong> — Respect des limites API de chaque plateforme. Espacement des requetes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 41 — STATS ENGAGEMENT -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 41 — Stats engagement</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Mesurer l'impact</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <p class="text-lg leading-relaxed mb-6">
+          Chaque nuit, on collecte les metriques d'engagement de chaque publication sur chaque reseau. Le courtier voit tout dans son dashboard.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+          <div class="neo-card-sm bg-neo-blue/10 p-4 text-center">
+            <div class="font-mono font-bold text-xl counter" data-target="2450">0</div>
+            <div class="text-xs text-gray-500 mt-1">Vues</div>
+          </div>
+          <div class="neo-card-sm bg-neo-green/10 p-4 text-center">
+            <div class="font-mono font-bold text-xl counter" data-target="847">0</div>
+            <div class="text-xs text-gray-500 mt-1">Impressions</div>
+          </div>
+          <div class="neo-card-sm bg-neo-orange/10 p-4 text-center">
+            <div class="font-mono font-bold text-xl counter" data-target="126">0</div>
+            <div class="text-xs text-gray-500 mt-1">Likes</div>
+          </div>
+          <div class="neo-card-sm bg-neo-purple/10 p-4 text-center">
+            <div class="font-mono font-bold text-xl counter" data-target="34">0</div>
+            <div class="text-xs text-gray-500 mt-1">Commentaires</div>
+          </div>
+          <div class="neo-card-sm bg-neo-pink/10 p-4 text-center">
+            <div class="font-mono font-bold text-xl counter" data-target="18">0</div>
+            <div class="text-xs text-gray-500 mt-1">Partages</div>
+          </div>
+          <div class="neo-card-sm bg-neo-yellow/20 p-4 text-center">
+            <div class="font-mono font-bold text-xl">5.1%</div>
+            <div class="text-xs text-gray-500 mt-1">Taux engagement</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Par reseau</span>
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Tendances mensuelles</span>
+          <span class="neo-card-sm bg-neo-green/10 px-3 py-1 text-sm">Export Excel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- PLATEFORME -->
+<!-- ============================================ -->
+
+<!-- SECTION 42 — ONBOARDING 5 ETAPES -->
+<section class="py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-green mb-4 font-bold">Section 42 — Onboarding 5 etapes</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Simple, guide, pas a pas</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <!-- Progress bar -->
+        <div class="flex items-center gap-2 mb-8">
+          <div class="flex-1 h-3 bg-neo-blue rounded-full"></div>
+          <div class="flex-1 h-3 bg-neo-blue rounded-full"></div>
+          <div class="flex-1 h-3 bg-neo-blue rounded-full"></div>
+          <div class="flex-1 h-3 bg-neo-gray rounded-full"></div>
+          <div class="flex-1 h-3 bg-neo-gray rounded-full"></div>
+          <span class="font-mono text-sm text-gray-500 ml-2">3/5</span>
+        </div>
+        <div class="grid sm:grid-cols-5 gap-4">
+          <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+            <div class="font-bold font-mono text-lg">1</div>
+            <div class="text-xs mt-1">Info cabinet</div>
+          </div>
+          <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+            <div class="font-bold font-mono text-lg">2</div>
+            <div class="text-xs mt-1">Identite visuelle</div>
+          </div>
+          <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+            <div class="font-bold font-mono text-lg">3</div>
+            <div class="text-xs mt-1">Reseaux + Email</div>
+          </div>
+          <div class="neo-card-sm bg-neo-gray p-4 text-center">
+            <div class="font-bold font-mono text-lg">4</div>
+            <div class="text-xs mt-1">Compagnies</div>
+          </div>
+          <div class="neo-card-sm bg-neo-gray p-4 text-center">
+            <div class="font-bold font-mono text-lg">5</div>
+            <div class="text-xs mt-1">Avis settings</div>
+          </div>
+        </div>
+        <div class="mt-6 space-y-3 text-sm">
+          <p><strong>Etape 1 :</strong> Nom du cabinet, adresse, ORIAS/FSMA, contact principal.</p>
+          <p><strong>Etape 2 :</strong> Upload du logo. Extraction auto des couleurs dominantes. Personnalisation.</p>
+          <p><strong>Etape 3 :</strong> Connexion OAuth reseaux sociaux + connexion boite email (M365 ou Gmail).</p>
+          <p><strong>Etape 4 :</strong> Selection des compagnies d'assurance et branches (pour filtrage des publications).</p>
+          <p><strong>Etape 5 :</strong> Configuration des avis : URL Google, templates sollicitation, preferences IA.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 43 — DASHBOARD 10 ONGLETS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 43 — Dashboard unifie 10 onglets</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Tout au meme endroit</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+          <div class="text-lg mb-1">&#127968;</div>
+          <div class="font-bold text-xs">Dashboard</div>
+        </div>
+        <div class="neo-card-sm bg-neo-green text-white p-4 text-center">
+          <div class="text-lg mb-1">&#11088;</div>
+          <div class="font-bold text-xs">Avis internes</div>
+        </div>
+        <div class="neo-card-sm bg-neo-orange text-white p-4 text-center">
+          <div class="text-lg mb-1">&#127758;</div>
+          <div class="font-bold text-xs">Avis Google</div>
+        </div>
+        <div class="neo-card-sm bg-neo-red text-white p-4 text-center">
+          <div class="text-lg mb-1">&#128220;</div>
+          <div class="font-bold text-xs">Reclamations</div>
+        </div>
+        <div class="neo-card-sm bg-neo-purple text-white p-4 text-center">
+          <div class="text-lg mb-1">&#128231;</div>
+          <div class="font-bold text-xs">Campagnes</div>
+        </div>
+        <div class="neo-card-sm bg-neo-pink text-white p-4 text-center">
+          <div class="text-lg mb-1">&#128269;</div>
+          <div class="font-bold text-xs">Concurrence</div>
+        </div>
+        <div class="neo-card-sm bg-neo-yellow text-neo-black p-4 text-center">
+          <div class="text-lg mb-1">&#128225;</div>
+          <div class="font-bold text-xs">Publications</div>
+        </div>
+        <div class="neo-card-sm bg-neo-green text-white p-4 text-center">
+          <div class="text-lg mb-1">&#128200;</div>
+          <div class="font-bold text-xs">Engagement</div>
+        </div>
+        <div class="neo-card-sm bg-neo-blue text-white p-4 text-center">
+          <div class="text-lg mb-1">&#128279;</div>
+          <div class="font-bold text-xs">Connexions</div>
+        </div>
+        <div class="neo-card-sm bg-neo-black text-white p-4 text-center">
+          <div class="text-lg mb-1">&#9881;</div>
+          <div class="font-bold text-xs">Parametres</div>
+        </div>
+      </div>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-3 mt-8">
+      <div class="neo-card bg-white p-6 text-sm">
+        <p><strong>Dashboard :</strong> Vue d'ensemble, KPIs, derniers avis, derniers posts. <strong>Avis internes :</strong> Tous les avis recus via sollicitation. <strong>Avis Google :</strong> Avis scraped depuis Google. <strong>Reclamations :</strong> Registre ACPR/FSMA. <strong>Campagnes :</strong> Historique des envois CSV/manuels. <strong>Concurrence :</strong> Benchmark concurrents. <strong>Publications :</strong> Historique des posts sociaux. <strong>Engagement :</strong> Metriques par post et par reseau. <strong>Connexions :</strong> Statut OAuth de chaque service. <strong>Parametres :</strong> Profil, preferences, templates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 44 — ADMIN BACK-OFFICE -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-orange mb-4 font-bold">Section 44 — Admin back-office</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Le panneau de controle</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Gestion courtiers</div>
+            <p class="text-sm">Creer, editer, desactiver des courtiers. Voir leur statut d'onboarding.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Creation publications</div>
+            <p class="text-sm">Rediger des articles, tips, creer et programmer des publications.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Bibliotheque templates</div>
+            <p class="text-sm">Templates email et publication reutilisables avec variables.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Monitoring global</div>
+            <p class="text-sm">Vue d'ensemble : statut des connexions, erreurs, alertes.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Stats agregees</div>
+            <p class="text-sm">KPIs globaux : nombre d'avis, taux de reponse, engagement total.</p>
+          </div>
+          <div class="bg-neo-orange/5 p-4 border-l-4 border-neo-orange">
+            <div class="font-bold mb-1">Editeur templates email</div>
+            <p class="text-sm">Creer et modifier les templates de sollicitation et de relance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 45 — ROLES ET PERMISSIONS -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 45 — Roles et permissions</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Qui voit quoi, qui fait quoi</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="neo-card bg-neo-black text-white p-6">
+          <div class="font-grotesk text-xl font-bold mb-3">Super-Admin</div>
+          <p class="text-sm opacity-80 mb-3">Acces total. Configuration plateforme, gestion des courtiers, monitoring technique.</p>
+          <div class="text-xs opacity-50">Toi et moi pendant le MVP</div>
+        </div>
+        <div class="neo-card bg-neo-purple text-white p-6">
+          <div class="font-grotesk text-xl font-bold mb-3">Admin</div>
+          <p class="text-sm opacity-80 mb-3">Creer du contenu, gerer les courtiers, voir les stats globales. Pas d'acces technique.</p>
+          <div class="text-xs opacity-50">Equipe Hi Broker</div>
+        </div>
+        <div class="neo-card bg-neo-blue text-white p-6">
+          <div class="font-grotesk text-xl font-bold mb-3">Courtier</div>
+          <p class="text-sm opacity-80 mb-3">Dashboard personnel, sollicitations, reclamations, avis, parametres. Ses donnees uniquement.</p>
+          <div class="text-xs opacity-50">Les 5 courtiers MVP</div>
+        </div>
+        <div class="neo-card bg-neo-green text-neo-black p-6">
+          <div class="font-grotesk text-xl font-bold mb-3">Annonceur</div>
+          <p class="text-sm opacity-80 mb-3">Vue limitee sur les publications. Voir les posts diffuses, pas d'acces aux avis ou reclamations.</p>
+          <div class="text-xs opacity-50">Role futur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 46 — BDD & INFRA -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 46 — Base de donnees & Infrastructure</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Le socle technique</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="grid sm:grid-cols-2 gap-6 mb-8">
           <div>
-            <div class="font-grotesk font-bold text-lg mb-1">Pas de site web ? Pas de probleme.</div>
-            <div class="font-space text-sm text-gray-500">
-              Il y a un bouton <strong>"Je n'ai pas de site web"</strong> qui permet de passer directement a l'etape suivante. C'est pas bloquant.
+            <div class="font-bold font-grotesk text-lg mb-3">Stack technique</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 text-sm"><div class="w-3 h-3 bg-neo-blue"></div> <strong>Next.js</strong> — Frontend + API routes</div>
+              <div class="flex items-center gap-3 text-sm"><div class="w-3 h-3 bg-neo-green"></div> <strong>Supabase</strong> — PostgreSQL + Auth + Storage</div>
+              <div class="flex items-center gap-3 text-sm"><div class="w-3 h-3 bg-neo-orange"></div> <strong>n8n</strong> — Workflows automatises (self-hosted)</div>
+              <div class="flex items-center gap-3 text-sm"><div class="w-3 h-3 bg-neo-purple"></div> <strong>VPS Hetzner</strong> — Allemagne, EU</div>
             </div>
+          </div>
+          <div>
+            <div class="font-bold font-grotesk text-lg mb-3">Base de donnees</div>
+            <div class="neo-card-sm bg-neo-gray p-4">
+              <div class="font-mono text-sm">
+                <div class="text-neo-blue font-bold mb-2">13 tables PostgreSQL</div>
+                brokers, users, solicitations,<br>
+                reviews_internal, reviews_google,<br>
+                complaints, campaigns,<br>
+                competitors, publications,<br>
+                engagement_stats, connections,<br>
+                templates, activity_log
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>8 workflows n8n</strong> automatises (crons, webhooks)</div>
+          <div class="flex items-start gap-2 text-sm"><span class="text-neo-green font-bold">&#10003;</span> <strong>Row-Level Security</strong> par courtier</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 47 — SECURITE & RGPD -->
+<section class="py-20 px-4 bg-neo-gray">
+  <div class="max-w-4xl mx-auto">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-pink mb-4 font-bold">Section 47 — Securite & RGPD</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Protection des donnees</h2>
+    </div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8">
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">HTTPS</div>
+            <p class="text-sm">Tout le trafic est chiffre. Certificats SSL auto-renouveles.</p>
+          </div>
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">Tokens chiffres</div>
+            <p class="text-sm">Tous les tokens OAuth stockes chiffres dans Supabase.</p>
+          </div>
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">RLS</div>
+            <p class="text-sm">Row-Level Security : chaque courtier ne voit que ses donnees.</p>
+          </div>
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">Backups quotidiens</div>
+            <p class="text-sm">Sauvegarde automatique chaque jour, retention 30 jours.</p>
+          </div>
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">Hebergement EU</div>
+            <p class="text-sm">Serveurs en Allemagne. Donnees dans l'UE.</p>
+          </div>
+          <div class="p-4 bg-neo-pink/5 border-l-4 border-neo-pink">
+            <div class="font-bold mb-1">Consentement opt-in</div>
+            <p class="text-sm">Liens de desinscription, droit a l'effacement, privacy policy sur la page tampon.</p>
           </div>
         </div>
       </div>
@@ -560,425 +2075,268 @@ body{font-family:'Inter',sans-serif;background:#fefefe;color:#0a0a0a;overflow-x:
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SECTION 13 — CE QUE L'IA ANALYSE -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
+<!-- SECTION 48 — RETENTION DONNEES -->
+<section class="py-20 px-4">
   <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">13 / SITE WEB &mdash; L'ANALYSE IA</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Ce que l'IA regarde.</h2>
-      <p class="text-gray-500 font-space mb-8 text-lg leading-relaxed">
-        Quand le courtier clique "Analyser", Claude va scraper son site et analyser plusieurs choses. Le resultat c'est un rapport utile et actionnable.
-      </p>
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-purple mb-4 font-bold">Section 48 — Politique de retention des donnees</div>
+      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-8">Combien de temps, pourquoi</h2>
     </div>
-    <div class="anim">
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#127912;</div>
-          <div class="font-grotesk font-bold mb-1">Design & UX</div>
-          <div class="font-space text-xs text-gray-500">Le site est-il moderne ? Mobile-friendly ? Navigation claire ?</div>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10">
+        <div class="space-y-4">
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Donnees clients (sollicitations, avis)</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Retenues 3 ans apres la derniere activite, puis anonymisees. Le courtier peut demander l'export ou la suppression a tout moment.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Reclamations</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Retenues 5 ans (obligation ACPR). Pas de suppression anticipee possible pour ces donnees reglementaires.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Tokens OAuth</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Supprimes immediatement quand le courtier est desactive ou revoque l'acces.</p>
+          </div>
+          <div class="accordion-trigger cursor-pointer flex items-center justify-between p-4 bg-neo-purple/5 border-l-4 border-neo-purple hover:bg-neo-purple/10 transition-colors">
+            <span class="font-bold">Nettoyage automatise</span>
+            <span class="accordion-icon font-bold text-xl">+</span>
+          </div>
+          <div class="accordion-content px-4">
+            <p class="py-4 text-sm">Job mensuel automatise qui identifie et traite les donnees arrivees a echeance. Pas de traitement manuel, pas d'oubli.</p>
+          </div>
         </div>
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#128221;</div>
-          <div class="font-grotesk font-bold mb-1">Contenu</div>
-          <div class="font-space text-xs text-gray-500">Les textes sont-ils clairs ? Bien structures ? Fautes d'orthographe ?</div>
-        </div>
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#128270;</div>
-          <div class="font-grotesk font-bold mb-1">SEO</div>
-          <div class="font-space text-xs text-gray-500">Balises meta, titres, mots-cles, vitesse de chargement...</div>
-        </div>
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#128274;</div>
-          <div class="font-grotesk font-bold mb-1">Confiance & Legal</div>
-          <div class="font-space text-xs text-gray-500">Mentions legales presentes ? RGPD ? Numero ORIAS visible ?</div>
-        </div>
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#11088;</div>
-          <div class="font-grotesk font-bold mb-1">E-reputation</div>
-          <div class="font-space text-xs text-gray-500">Liens vers les avis Google ? Temoignages clients visibles ?</div>
-        </div>
-        <div class="neo-card p-5">
-          <div class="text-2xl mb-2">&#128161;</div>
-          <div class="font-grotesk font-bold mb-1">Recommandations</div>
-          <div class="font-space text-xs text-gray-500">3-5 actions concretes pour ameliorer le site rapidement.</div>
+        <div class="neo-card-sm bg-neo-green/10 p-4 mt-6 text-sm text-center">
+          <strong>RGPD compliant.</strong> Export complet des donnees sur demande. Droit a l'effacement respecte.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SECTION 14 — L'ONBOARDING MIS A JOUR -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">14 / ONBOARDING MIS A JOUR</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Le nouveau parcours.</h2>
-      <p class="text-gray-500 font-space mb-8 text-lg leading-relaxed">
-        Avec la nouvelle etape "Site web", l'onboarding passe de 6 a <strong class="text-neo-black">7 etapes</strong>. La nouvelle etape s'insere entre Google Maps et la personnalisation de l'image.
-      </p>
-    </div>
-    <div class="anim">
-      <div class="space-y-3">
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">1</div>
-          <div class="font-space text-sm"><strong>Creation du compte</strong> &mdash; prenom, nom, email, mot de passe</div>
-          <div class="ml-auto text-green-600 font-mono text-xs font-bold">FAIT</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">2</div>
-          <div class="font-space text-sm"><strong>Infos du cabinet</strong> &mdash; pays, nom, SIRET, adresse</div>
-          <div class="ml-auto text-green-600 font-mono text-xs font-bold">FAIT</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">3</div>
-          <div class="font-space text-sm"><strong>Connexion Google Maps</strong> &mdash; place_id + extraction avis + concurrents</div>
-          <div class="ml-auto text-red-600 font-mono text-xs font-bold">A RENFORCER</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 priority-new neo-border-2">
-          <div class="neo-card-sm bg-blue-600 text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">4</div>
-          <div class="font-space text-sm"><strong>Site web</strong> &mdash; URL + analyse IA (ou "je n'ai pas de site")</div>
-          <div class="ml-auto text-blue-600 font-mono text-xs font-bold">NOUVEAU</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">5</div>
-          <div class="font-space text-sm"><strong>Personnalisation image</strong> &mdash; couleur + logo</div>
-          <div class="ml-auto text-green-600 font-mono text-xs font-bold">FAIT</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">6</div>
-          <div class="font-space text-sm"><strong>Personnalisation IA</strong> &mdash; ton, specialite</div>
-          <div class="ml-auto text-green-600 font-mono text-xs font-bold">FAIT</div>
-        </div>
-        <div class="flex items-center gap-3 p-4 neo-border-2 bg-white">
-          <div class="neo-card-sm bg-neo-black text-white w-10 h-10 flex-shrink-0 flex items-center justify-center font-mono text-sm font-bold">7</div>
-          <div class="font-space text-sm"><strong>Recapitulatif</strong> &mdash; validation finale</div>
-          <div class="ml-auto text-green-600 font-mono text-xs font-bold">FAIT</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 15 — EMAILS INTRO -->
+<!-- SECTION 49 — PROCHAINES ETAPES -->
 <!-- ============================================ -->
-<section id="emails" class="py-20 px-4 bg-neo-dark text-white" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number text-gray-400 mb-4">15 / EMAILS</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Gmail & Outlook.</h2>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-6">
-        Le gros morceau qui reste. L'idee c'est que les emails de campagne partent de la boite mail du courtier (son Gmail ou Outlook), pas d'un "noreply@hibroker.com". Comme ca le client recoit un mail de quelqu'un qu'il connait, et ca va pas dans les spams.
-      </p>
-      <p class="text-lg text-gray-400 font-space leading-relaxed mb-8">
-        Les briques techniques sont la : OAuth, chiffrement des tokens, code d'envoi... Il faut finir de tout brancher dans l'interface.
-      </p>
+<section id="next" class="py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="animate-on-scroll from-bottom">
+      <div class="section-number text-neo-blue mb-4 font-bold">Section 49 — Prochaines etapes</div>
+      <h2 class="font-grotesk text-4xl sm:text-6xl font-bold mb-8">On y est presque</h2>
     </div>
-    <div class="anim">
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div class="neo-card p-5" style="border-color:#333;box-shadow:6px 6px 0 rgba(255,255,255,.1)">
-          <div class="text-2xl mb-2">&#128231;</div>
-          <div class="font-grotesk font-bold mb-1 text-white">Microsoft 365</div>
-          <div class="font-space text-xs text-gray-400">Graph API. La majorite des courtiers en Belgique sont sur Outlook.</div>
-        </div>
-        <div class="neo-card p-5" style="border-color:#333;box-shadow:6px 6px 0 rgba(255,255,255,.1)">
-          <div class="text-2xl mb-2">&#9993;</div>
-          <div class="font-grotesk font-bold mb-1 text-white">Gmail</div>
-          <div class="font-space text-xs text-gray-400">Gmail API. Fallback si le courtier n'a pas Microsoft.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 16 — CE QUI EST DEJA FAIT EMAILS -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">16 / EMAILS &mdash; DEJA FAIT</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Ce qui est en place.</h2>
-      <p class="text-gray-500 font-space mb-8 text-lg leading-relaxed">
-        On n'est pas parti de zero. Voila ce qui est deja code et qui marche :
-      </p>
-    </div>
-    <div class="anim">
-      <div class="space-y-3">
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Flux OAuth complet</strong> &mdash; Microsoft 365 + Gmail, avec callback et stockage</div>
-        </div>
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Chiffrement AES-256-GCM</strong> des tokens avant stockage en base</div>
-        </div>
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Table connections</strong> en base avec les tokens chiffres</div>
-        </div>
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Cron de refresh</strong> des tokens expires (tous les jours a 3h)</div>
-        </div>
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Code d'envoi</strong> via Graph API (Microsoft) et Gmail API</div>
-        </div>
-        <div class="flex items-start gap-3 p-4 neo-border-2 bg-white">
-          <span class="text-green-600 text-lg">&#9745;</span>
-          <div class="font-space text-sm"><strong>Templates email HTML</strong> pour sollicitation + relance</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 17 — CE QU'IL RESTE EMAILS -->
-<!-- ============================================ -->
-<section class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">17 / EMAILS &mdash; A FAIRE</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Ce qu'il reste a brancher.</h2>
-    </div>
-    <div class="anim">
-      <div class="space-y-4">
-        <div class="priority-high p-5 neo-border-2">
-          <div class="flex items-start gap-3">
-            <span class="text-lg">&#9744;</span>
+    <div class="animate-on-scroll from-bottom stagger-2">
+      <div class="neo-card bg-white p-8 sm:p-10 text-left mb-8">
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-blue text-white w-12 h-12 flex items-center justify-center font-bold font-mono text-lg flex-shrink-0">1</div>
             <div>
-              <div class="font-grotesk font-bold mb-1">Brancher dans l'interface campagne</div>
-              <div class="font-space text-sm text-gray-600">Quand le courtier cree une campagne, il doit pouvoir choisir "envoyer depuis mon Outlook" ou "envoyer depuis mon Gmail". Si pas de connexion, on lui propose de connecter sa boite mail.</div>
+              <div class="font-bold font-grotesk text-lg">Tu valides ce scope</div>
+              <p class="text-gray-600 text-sm mt-1">Lis tranquillement, note tes questions. On en discute et on ajuste si besoin.</p>
             </div>
           </div>
-        </div>
-        <div class="priority-high p-5 neo-border-2">
-          <div class="flex items-start gap-3">
-            <span class="text-lg">&#9744;</span>
+          <div class="schema-line w-8 ml-6"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-orange text-white w-12 h-12 flex items-center justify-center font-bold font-mono text-lg flex-shrink-0">2</div>
             <div>
-              <div class="font-grotesk font-bold mb-1">Refresh token Microsoft plus robuste</div>
-              <div class="font-space text-sm text-gray-600">Les tokens Microsoft expirent plus vite que Gmail. Faut gerer ca proprement pour que ca ne casse pas au bout de quelques jours.</div>
+              <div class="font-bold font-grotesk text-lg">On signe le contrat</div>
+              <p class="text-gray-600 text-sm mt-1">Contrat simple : scope, budget, planning, conditions. Pas de surprise.</p>
             </div>
           </div>
-        </div>
-        <div class="priority-high p-5 neo-border-2">
-          <div class="flex items-start gap-3">
-            <span class="text-lg">&#9744;</span>
+          <div class="schema-line w-8 ml-6"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-green text-white w-12 h-12 flex items-center justify-center font-bold font-mono text-lg flex-shrink-0">3</div>
             <div>
-              <div class="font-grotesk font-bold mb-1">Page parametres connexion email</div>
-              <div class="font-space text-sm text-gray-600">Une page dans les parametres ou le courtier voit s'il est connecte a Gmail ou Outlook, peut deconnecter et reconnecter.</div>
+              <div class="font-bold font-grotesk text-lg">Je demarre la Phase 0 immediatement</div>
+              <p class="text-gray-600 text-sm mt-1">Setup infrastructure, base de donnees, architecture. Le socle technique sur lequel tout repose.</p>
+            </div>
+          </div>
+          <div class="schema-line w-8 ml-6"></div>
+          <div class="flex items-start gap-4">
+            <div class="neo-card-sm bg-neo-purple text-white w-12 h-12 flex items-center justify-center font-bold font-mono text-lg flex-shrink-0">4</div>
+            <div>
+              <div class="font-bold font-grotesk text-lg">Premier livrable en 3-4 jours</div>
+              <p class="text-gray-600 text-sm mt-1">Infrastructure deployee, base de donnees creee, premier workflow n8n operationnel. Du concret, tout de suite.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 18 — LE FLUX EMAIL COMPLET -->
-<!-- ============================================ -->
-<section class="py-20 px-4" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">18 / EMAILS &mdash; LE FLUX</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Comment ca doit fonctionner.</h2>
-      <p class="text-gray-500 font-space mb-8 text-lg leading-relaxed">
-        Voila le parcours complet une fois que tout est branche :
-      </p>
-    </div>
-    <div class="anim">
-      <div class="space-y-3">
-        <div class="flow-step">
-          <span class="text-lg">&#128100;</span>
-          Le courtier connecte son Outlook ou Gmail (1 clic, OAuth)
+    <div class="animate-on-scroll bounce stagger-3">
+      <div class="neo-card bg-neo-blue text-white p-10 sm:p-14">
+        <h3 class="font-grotesk text-3xl sm:text-4xl font-bold mb-4">Pret quand tu l'es, Bruno.</h3>
+        <p class="text-lg opacity-80 mb-8">Un mot de ta part et on lance la machine.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://calendly.com/baptiste-visionia/30min" target="_blank" class="neo-btn bg-neo-yellow text-neo-black px-6 py-3 font-bold font-grotesk inline-block no-underline">
+            &#128222; Planifier un call
+          </a>
+          <a href="mailto:baptiste.fort.pro@gmail.com" class="neo-btn bg-white text-neo-black px-6 py-3 font-bold font-grotesk inline-block no-underline">
+            &#9993; Repondre par email
+          </a>
         </div>
-        <div class="text-center flow-arrow">&darr;</div>
-        <div class="flow-step">
-          <span class="text-lg">&#128274;</span>
-          Tokens chiffres en AES-256 et stockes en base
+        <div class="mt-8 pt-6 border-t border-white/20 text-sm opacity-60">
+          <p>Baptiste Fort — Developpeur Full-Stack</p>
+          <p class="mt-1">baptiste.fort.pro@gmail.com</p>
+          <p class="mt-1">Document genere le 17 fevrier 2026</p>
         </div>
-        <div class="text-center flow-arrow">&darr;</div>
-        <div class="flow-step">
-          <span class="text-lg">&#128232;</span>
-          Il cree une campagne et ajoute ses clients
-        </div>
-        <div class="text-center flow-arrow">&darr;</div>
-        <div class="flow-step">
-          <span class="text-lg">&#128640;</span>
-          Il clique "Envoyer" &rarr; les emails partent de SA boite mail
-        </div>
-        <div class="text-center flow-arrow">&darr;</div>
-        <div class="flow-step">
-          <span class="text-lg">&#128229;</span>
-          Les emails apparaissent dans ses "Envoyes"
-        </div>
-        <div class="text-center flow-arrow">&darr;</div>
-        <div class="flow-step">
-          <span class="text-lg">&#9989;</span>
-          Le client recoit un mail de "jean@cabinet-dupont.fr" &mdash; zero spam
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 19 — RECAP COMPLET -->
-<!-- ============================================ -->
-<section id="recap" class="py-20 px-4 bg-neo-gray" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-4xl mx-auto">
-    <div class="anim">
-      <div class="section-number mb-4">19 / RECAP</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Tout ce qu'il faut faire.</h2>
-      <p class="text-gray-500 font-space mb-8 text-lg leading-relaxed">
-        En resume, voila les 4 chantiers pour la v2 :
-      </p>
-    </div>
-    <div class="anim">
-      <div class="space-y-6">
-        <!-- Chantier 1 -->
-        <div class="neo-card p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="neo-card-sm bg-red-500 text-white px-3 py-1 font-mono text-xs font-bold">PRIORITE 1</div>
-            <div class="font-grotesk font-bold text-lg">Tout rendre cliquable</div>
-          </div>
-          <div class="space-y-2 text-sm font-space text-gray-600">
-            <div>&#9744; KPIs du dashboard &rarr; cliquables vers les pages correspondantes</div>
-            <div>&#9744; Compteurs des campagnes &rarr; cliquables avec filtres</div>
-            <div>&#9744; Stats Avis Google &rarr; cliquables avec scroll/filtre</div>
-            <div>&#9744; "3 suggestions de reponse" &rarr; ouvre le panneau des reponses IA</div>
-            <div>&#9744; Barres de notation &rarr; filtre par note</div>
-          </div>
-        </div>
-        <!-- Chantier 2 -->
-        <div class="neo-card p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="neo-card-sm bg-red-500 text-white px-3 py-1 font-mono text-xs font-bold">PRIORITE 2</div>
-            <div class="font-grotesk font-bold text-lg">Extraction avis & concurrents 100%</div>
-          </div>
-          <div class="space-y-2 text-sm font-space text-gray-600">
-            <div>&#9744; Scraping Apify fiable a 100% pendant l'onboarding</div>
-            <div>&#9744; Fallback / retry si l'extraction echoue</div>
-            <div>&#9744; Loader visible pendant le traitement</div>
-            <div>&#9744; Le courtier voit ses avis + concurrents a la fin. Garanti.</div>
-          </div>
-        </div>
-        <!-- Chantier 3 -->
-        <div class="neo-card p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="neo-card-sm bg-blue-500 text-white px-3 py-1 font-mono text-xs font-bold">PRIORITE 3</div>
-            <div class="font-grotesk font-bold text-lg">Nouvelle etape : Site web</div>
-          </div>
-          <div class="space-y-2 text-sm font-space text-gray-600">
-            <div>&#9744; Champ URL dans l'onboarding</div>
-            <div>&#9744; Bouton "Analyser" + appel Claude pour l'analyse</div>
-            <div>&#9744; Affichage du resultat (design, contenu, SEO, legal, recommandations)</div>
-            <div>&#9744; Option "Je n'ai pas de site web" pour passer a la suite</div>
-          </div>
-        </div>
-        <!-- Chantier 4 -->
-        <div class="neo-card p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="neo-card-sm bg-orange-500 text-white px-3 py-1 font-mono text-xs font-bold">PRIORITE 4</div>
-            <div class="font-grotesk font-bold text-lg">Emails Gmail / Outlook</div>
-          </div>
-          <div class="space-y-2 text-sm font-space text-gray-600">
-            <div>&#9744; Brancher l'envoi email dans l'interface campagne</div>
-            <div>&#9744; Choix du provider (Gmail / Outlook) a la creation de campagne</div>
-            <div>&#9744; Refresh token Microsoft plus robuste</div>
-            <div>&#9744; Page parametres pour gerer la connexion email</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- SECTION 20 — CONCLUSION -->
-<!-- ============================================ -->
-<section class="py-24 px-4 gradient-bg text-white" style="border-top:3px solid #0a0a0a">
-  <div class="max-w-3xl mx-auto text-center">
-    <div class="anim">
-      <div class="section-number text-gray-400 mb-4">20 / C'EST TOUT</div>
-      <h2 class="font-grotesk text-4xl sm:text-5xl font-bold mb-6">Voila le plan.</h2>
-      <p class="text-lg opacity-80 font-space mb-4 leading-relaxed">
-        C'est clair et precis. 4 chantiers, pas de surprises. Le plus gros c'est de rendre tout cliquable et de fiabiliser l'extraction des avis. Le site web c'est du nouveau. Les emails c'est du branchement.
-      </p>
-      <p class="text-lg opacity-80 font-space mb-4 leading-relaxed">
-        Une fois que c'est fait, la v2 est solide et le courtier a une experience vraiment complete.
-      </p>
-      <p class="text-lg opacity-80 font-space mb-8 leading-relaxed">
-        Si t'as des questions ou si tu veux qu'on priorise differemment, dis-moi.
-      </p>
-      <div class="font-mono text-sm opacity-50">
-        Baptiste Fort &mdash; Mars 2026
       </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="py-10 px-4 bg-neo-black text-white" style="border-top:3px solid #0a0a0a">
+<footer class="bg-neo-black text-white py-12 px-4">
   <div class="max-w-5xl mx-auto text-center">
-    <div class="neo-card-sm bg-white/10 px-6 py-3 inline-block font-mono text-sm mb-3">HiBroker Advice &mdash; v2 Roadmap</div>
-    <p class="text-gray-500 text-sm font-space">20 sections &bull; Mars 2026 &bull; Baptiste Fort &rarr; Isma</p>
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-neo-blue border-2 border-white flex items-center justify-center">
+        <span class="text-white font-bold font-mono text-sm">HB</span>
+      </div>
+      <span class="font-grotesk font-bold text-lg">Hi Broker Platform</span>
+    </div>
+    <p class="text-sm opacity-40">Reponse projet Hi Broker — Baptiste Fort pour Bruno Lambotte — Fevrier 2026</p>
+    <p class="text-xs opacity-20 mt-2">50 sections. 0 zone d'ombre. Pret a demarrer.</p>
   </div>
 </footer>
 
-<!-- BACK TO TOP -->
-<button id="back-top" class="back-top neo-btn bg-neo-black text-white w-12 h-12 flex items-center justify-center text-lg" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
-
 <!-- JAVASCRIPT -->
 <script>
-// Scroll progress bar
-window.addEventListener('scroll',()=>{
-  const h=document.documentElement;
-  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
-  document.getElementById('progress-bar').style.width=pct+'%';
-  document.getElementById('back-top').classList.toggle('show',h.scrollTop>600);
-});
-
-// Scroll animations
-const obs=new IntersectionObserver(e=>{
-  e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('v');obs.unobserve(en.target)}});
-},{threshold:.05,rootMargin:'0px 0px 40px 0px'});
-document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
-
-// Click burst particles
-document.addEventListener('click',e=>{
-  if(Math.random()>.7)return;
-  const colors=['#0a0a0a','#333','#555','#888','#bbb'];
-  for(let i=0;i<5;i++){
-    const d=document.createElement('div');
-    d.className='click-burst';
-    d.style.cssText=`left:${e.clientX}px;top:${e.clientY}px;width:5px;height:5px;border-radius:50%;background:${colors[Math.floor(Math.random()*colors.length)]};`;
-    document.body.appendChild(d);
-    const a=Math.random()*Math.PI*2,dist=25+Math.random()*40;
-    d.animate([
-      {transform:'translate(0,0) scale(1)',opacity:1},
-      {transform:`translate(${Math.cos(a)*dist}px,${Math.sin(a)*dist}px) scale(0)`,opacity:0}
-    ],{duration:400+Math.random()*200,easing:'cubic-bezier(.16,1,.3,1)'});
-    setTimeout(()=>d.remove(),700);
-  }
-});
-
-// Nav highlight
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('nav a[href^="#"]');
-window.addEventListener('scroll',()=>{
-  let current='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.id});
-  navLinks.forEach(l=>{
-    l.style.background=l.getAttribute('href')==='#'+current?'#f5f5f5':'';
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Counter animation
+function animateCounters() {
+  document.querySelectorAll('.counter[data-target]').forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    if (!target) return;
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      counter.textContent = Math.floor(current).toLocaleString();
+    }, 16);
+    counter.removeAttribute('data-target');
+  });
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounters();
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter[data-target]').forEach(el => counterObserver.observe(el));
+
+// Mobile menu
+const mobileToggle = document.getElementById('mobile-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+const mobileOverlay = document.getElementById('mobile-overlay');
+
+mobileToggle?.addEventListener('click', () => {
+  mobileMenu.classList.add('open');
+  mobileOverlay.classList.remove('hidden');
+});
+
+[mobileClose, mobileOverlay].forEach(el => {
+  el?.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    mobileOverlay.classList.add('hidden');
+  });
+});
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    mobileOverlay.classList.add('hidden');
+  });
+});
+
+// Easter egg: click burst
+document.querySelectorAll('.easter-egg').forEach(el => {
+  el.addEventListener('click', (e) => {
+    for(let i = 0; i < 8; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'click-burst';
+      particle.style.left = e.clientX + 'px';
+      particle.style.top = e.clientY + 'px';
+      particle.style.width = '8px';
+      particle.style.height = '8px';
+      particle.style.background = ['#4361ee','#ff6b35','#06d6a0','#ffd166','#7209b7','#f72585'][Math.floor(Math.random()*6)];
+      particle.style.borderRadius = '50%';
+      document.body.appendChild(particle);
+      const angle = (i / 8) * Math.PI * 2;
+      let x = 0, y = 0, opacity = 1;
+      const animate = () => {
+        x += Math.cos(angle) * 3;
+        y += Math.sin(angle) * 3 + 0.5;
+        opacity -= 0.02;
+        particle.style.transform = `translate(${x}px, ${y}px)`;
+        particle.style.opacity = opacity;
+        if(opacity > 0) requestAnimationFrame(animate);
+        else particle.remove();
+      };
+      requestAnimationFrame(animate);
+    }
+  });
+});
+
+// Progress bars animation
+const progressObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = width; }, 200);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.neo-card, .neo-card-sm').forEach(el => progressObserver.observe(el));
+
+// Accordion
+document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const content = trigger.nextElementSibling;
+    const icon = trigger.querySelector('.accordion-icon');
+    content.classList.toggle('open');
+    icon?.classList.toggle('open');
+  });
+});
+
+// Navbar scroll effect
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > 100) {
+    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+  } else {
+    navbar.style.boxShadow = 'none';
+  }
+  lastScroll = currentScroll;
 });
 </script>
 
